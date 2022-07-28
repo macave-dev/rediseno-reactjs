@@ -2,6 +2,7 @@ import React, {useState,useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import InterestedPosts from '../InterestedPosts'
+import RelatedTopics from '../RelatedTopics'
 
 const PostPage = () => {
 
@@ -72,12 +73,34 @@ const PostPage = () => {
                   <div dangerouslySetInnerHTML={{__html: dataPost.content.rendered}}/>
                 </ContentInfo>
                 <InterestedPosts/>
-                
-
-
               </LeftSide>
 
+              <RightSide>
+                <Advertisement>
+                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                </Advertisement>
+                <Advertisement>
+                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                </Advertisement>
+              </RightSide>
             </Content>
+
+
+            <Content>
+                <LeftSide>
+                  <RelatedTopics/>
+                  {/* <Author props = {state.source.author[post.author]}/> */}
+                </LeftSide>
+                <RightSide>
+                <Advertisement>
+                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                </Advertisement>
+              </RightSide>
+              </Content>
+
         </Container>
       )}
     </div>
