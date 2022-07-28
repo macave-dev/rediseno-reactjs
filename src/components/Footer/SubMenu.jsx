@@ -2,14 +2,30 @@ import React,{useState,useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const SubMenu = ({props}) => {
+const SubMenu = () => {
+
+    const url = 'https://eventosyfestivales.com/wp-json/wp-macave/v1/footer';
+    const [information,setInformation] = useState();
+    const fetchApi = async() => {
+        const response = await fetch(url);
+        const responseJSON = await response.json();
+        setInformation(responseJSON);
+        setClass('three-columns')
+    }
+
+    useEffect(() => {
+        fetchApi();
+    },[])
+
+
+
 
   const [columnsClass,setClass] = useState();
   const ref = useRef();
 
   useEffect(() => {
-    if ( ref.current && props ) {
-        if ( props.length > 3 ) {
+    if ( ref.current && information ) {
+        if ( information.length > 3 ) {
             setClass('four-columns')
         }
     }
@@ -19,15 +35,13 @@ const SubMenu = ({props}) => {
     <Container ref={ref} className={columnsClass}>
             <h4>MENÚ</h4>
             <ul>
-                {
-                    props.map((item,id) => {
+                {!information ?  null : (
+                    information.map(item => {
                         return(
-                            <li key = {id}>
-                                <Link target = '_blank' to={item.url}>{item.title}</Link>
+                            <li key = {item.id}>
+                                 <Link target = '_blank' to={item.url}>{item.title}</Link>
                             </li>
-                        )
-                    })
-                }
+                        )}))}
             </ul>
         </Container>
   )

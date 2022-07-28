@@ -7,62 +7,45 @@ import styled from 'styled-components'
 
 const Footer = () => {
 
-    const url_Schema = 'https://eventosyfestivales.com/wp-json/wp-macave/v1/schema';
-    const url_Footer = 'https://eventosyfestivales.com/wp-json/wp-macave/v1/footer';
-
-
-    const [infoSchema,setInfoSchema] = useState([]);
-    const [infoFooter,setInfoFooter] = useState([]);
-
-
-    const fetchApiSchema = async() => {
-        const response = await fetch(url_Schema);
+    const url = 'https://eventosyfestivales.com/wp-json/wp-macave/v1/schema';
+    const [information,setInformation] = useState()
+    const fetchApi = async() => {
+        const response = await fetch(url);
         const responseJSON = await response.json();
-        setInfoSchema(responseJSON);
-    }
-
-    const fetchApiFooter = async() => {
-        const response = await fetch(url_Footer);
-        const responseJSON = await response.json();
-        setInfoFooter(responseJSON);
+        setInformation(responseJSON);
     }
 
     useEffect(() => {
-        fetchApiSchema();
-        fetchApiFooter();
+        fetchApi();
     },[])
 
 
-
+   
     return (
         <FooterContainer>
-            {!infoSchema || !infoFooter ? null : (
+            <FooterFirstPart/>
 
-                <>
-                    <FooterFirstPart props = {infoSchema} />
             <FooterContent>
-                <SubMenuFooter props = {infoFooter} />
-                {
-                    <>
+                <SubMenuFooter/>
+
+                {!information ? '': (
+                    <div>
                         <DIRECCION className='direction-column'>
                             <h4>DIRECCIÓN</h4>
-                            <p>{infoSchema.Direccion}</p>
+                            <p>{information.Direccion}</p>
                             
                         </DIRECCION>
                         <CONTACTO className='contact-column'>
                             <h4>CONTACTO</h4>
-                            <Link to={`mailto:${infoSchema.Contacto}`} target="_blank">{infoSchema.Contacto}</Link>
+                            <Link to={`mailto:${information.Contacto}`} target="_blank">{information.Contacto}</Link>
                         </CONTACTO>
-                    </>
-                }
-                
+                    </div>
+                )}
+
             </FooterContent>
-            <FooterLastPart props={ infoSchema} />
-                </>
 
 
-            )}
-            
+            <FooterLastPart/>
         </FooterContainer>
         
     )

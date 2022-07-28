@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Categories from './components/Views/Categories'
 import PostPage from './components/Views/PostPage'
 import Posts from './components/Views/Posts'
+import Footer from './components/Footer/Footer'
 
 
 const App = () => {
@@ -19,7 +20,8 @@ const App = () => {
           <Route path='posts' element = {<Posts/>}/>
           </Routes>
       </Main>
-    
+  
+      <Footer/>
     </>
   
   )

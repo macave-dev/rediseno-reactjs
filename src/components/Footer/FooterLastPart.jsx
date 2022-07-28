@@ -1,28 +1,38 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
-const FooterLastPart = ({props}) => {
+const FooterLastPart = () => {
+
+    const url_Schema = 'https://eventosyfestivales.com/wp-json/wp-macave/v1/schema';
+    const [infoSchema,setInfoSchema] = useState();
+    const fetchApiSchema = async() => {
+        const response = await fetch(url_Schema);
+        const responseJSON = await response.json();
+        setInfoSchema(responseJSON);
+    }
+    useEffect(() => {
+        fetchApiSchema();
+    },[])
 
     return(
         <FooterLast>
-            {!props ? null : (
+            {!infoSchema ? null : (
                 <div>
-                <ul>
-                    <li>
-                        <Link target="_blank" to='/politica-de-privacidad/'>Aviso de privacidad</Link>
-                    </li>
-                    <li>
-                        <Link target="_blank" to = '/terminos-y-condiciones-de-uso-aviso-de-privacidad/'>Términos y condiciones </Link>
-                    </li>
-                </ul>
-                <div>
-                    <p> Desarrollado por <Link to = 'https://macave.mx/' target = 'blank'> Macave. </Link>Copyright C 2022 - 2023
-                    </p>
+                    <ul>
+                        <li>
+                            <Link target="_blank" to='/politica-de-privacidad/'>Aviso de privacidad</Link>
+                        </li>
+                        <li>
+                            <Link target="_blank" to = '/terminos-y-condiciones-de-uso-aviso-de-privacidad/'>Términos y condiciones </Link>
+                        </li>
+                    </ul>
+                    <div>
+                        <p> Desarrollado por <Link to = 'https://macave.mx/' target = 'blank'> Macave. </Link>Copyright C 2022 - 2023
+                        </p>
+                    </div>
                 </div>
-        </div>
-            )
-            }
+            )}
             
         </FooterLast>
     )

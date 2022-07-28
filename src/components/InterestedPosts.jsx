@@ -45,8 +45,6 @@ const InterestedPosts = () => {
         fetchAPI()
     },[])
 
-    console.log('hello')
-    console.log(dataPost)
 
     const settings = {
         className: "center",
