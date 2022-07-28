@@ -15,7 +15,7 @@ const App = () => {
       <Main>
         <Routes>
           <Route path='/category/:slug' element = {<Categories/>}/>
-          <Route path = "/:id" element = {<PostPage/>}/>
+          <Route path = "/:slug" element = {<PostPage/>}/>
           <Route path='posts' element = {<Posts/>}/>
           </Routes>
       </Main>

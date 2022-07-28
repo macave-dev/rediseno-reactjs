@@ -1,17 +1,24 @@
 import React, {useState,useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
+import InterestedPosts from '../InterestedPosts'
 
 const PostPage = () => {
 
-  const urlPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts${window.location.pathname}`
+  const slug = window.location.pathname
+  const slug_f = slug.slice(1)
+
+
+  const urlPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug_f}`
   const urlCategories = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
   const urlAuthors = `https://eventosyfestivales.com/wp-json/wp/v2/users/`
+
+  
   
 
-  const [dataPost, setDataPost] = useState()
-  const [dataCategories, setDataCategories] = useState()
-  const [dataAuthor, setDataAuthor] = useState()
+  const [dataPost, setDataPost] = useState(null)
+  const [dataCategories, setDataCategories] = useState(null)
+  const [dataAuthor, setDataAuthor] = useState(null)
 
 
   const fetchAPI = async() => {
@@ -25,7 +32,7 @@ const PostPage = () => {
     const responseAuthor = await fetch(urlAuthors)
     const responseAuthorJSON = await responseAuthor.json()
 
-    setDataPost(responsePostJSON)
+    setDataPost(responsePostJSON[0])
     setDataCategories(responseCategoriesJSON)
     setDataAuthor(responseAuthorJSON)
   }
@@ -35,6 +42,7 @@ const PostPage = () => {
     fetchAPI()
   })
 
+  
 
   
 
@@ -49,49 +57,27 @@ const PostPage = () => {
 
   return (
     <div>
-      {!dataPost || !dataCategories || !dataAuthor ? null :(
+      {!dataPost ? 'Cargando' :(
         <Container> 
-           <Title >{dataPost.title.rendered}</Title>
+           <Title>{dataPost.title.rendered}</Title>
 
-          <DateWrapper>
-              {/* <strong>{dayjs(dataPost.date).format("DD MMMM YYYY")} - {dataCategories[dataPost.categories[0]].name}</strong> */}
+           <DateWrapper>
+              <strong>{dayjs(dataPost.date).format("DD MMMM YYYY")} - </strong>
               {/* <strong>Autor: {state.source.author[post.author].name} </strong><br/> */}
             </DateWrapper>
-
-
             <Content>
               <LeftSide>
-                {/* <img src = {post.jetpack_featured_media_url} alt = {state.source.attachment[post.featured_media].alt_text}></img> */}
-                {/* <Html2React html={state.source.attachment[post.featured_media].caption.rendered} /> */}
+                <img src = {dataPost.jetpack_featured_media_url} alt = "" />
                 <ContentInfo>
-                    <div dangerouslySetInnerHTML={{__html: dataPost.content.rendered}}/>
-                  </ContentInfo>
-                  {/* <InterestedPosts/> */}
-                  {/* <Slot name = '/21802911858/Anuncios-AdSense-SeUno-300x250' /> */}
-              </LeftSide>
-              <RightSide>
-                <Advertisement>
-                  {/* <Slot name = {slideAds[counter]} /> */}
-                </Advertisement>
-                <Advertisement>
-                  
-                </Advertisement>
-              </RightSide>
-              </Content>
-              {/* <RelatedPosts props = {category_post}/> */}
-              <Content>
-                <LeftSide>
-                  {/* {post.tags && <RelatedTopics tags = {post.tags}/> } */}
-                  {/* <Author props = {state.source.author[post.author]}/> */}
-                </LeftSide>
-                <RightSide>
-                <Advertisement>
-                  {/* <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/> */}
-                </Advertisement>
-              </RightSide>
-              </Content>
+                  <div dangerouslySetInnerHTML={{__html: dataPost.content.rendered}}/>
+                </ContentInfo>
+                <InterestedPosts/>
+                
 
+
+              </LeftSide>
+
+            </Content>
         </Container>
       )}
     </div>
