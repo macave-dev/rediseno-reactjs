@@ -47,8 +47,6 @@ const PostPage = () => {
     }
   })
 
-  
-
   return (
     <div>
       {!dataPost || !dataCategories || !dataAuthor ? null :(
