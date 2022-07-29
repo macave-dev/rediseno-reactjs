@@ -25,21 +25,26 @@ const Home = () => {
         <Suspense fallback = {null}>
           <Section2/>
         </Suspense>
-        {/* <Suspense fallback = {null}>
+        <Suspense fallback = {null}>
           <Section4/>
         </Suspense>
+        
         <Suspense fallback = {null}>
           <YoutubeVideo/>
         </Suspense>
+
         <Suspense fallback = {null}>
           <Section5/>
         </Suspense>
+
         <Suspense fallback = {null}>
           <Section6/> 
         </Suspense>
+
         <Suspense fallback = {null}>
             <Section7/>
         </Suspense>
+        
         <Suspense fallback = {null}>
           <Section8/>
         </Suspense>
@@ -48,7 +53,7 @@ const Home = () => {
         </Suspense>
         <Suspense fallback = {null}>
           <Section10/>
-        </Suspense> */}
+        </Suspense>
     </div>
   )
 }

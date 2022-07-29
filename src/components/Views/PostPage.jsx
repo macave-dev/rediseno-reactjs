@@ -2,7 +2,7 @@ import React, {useState,useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import InterestedPosts from '../InterestedPosts'
-import RelatedTopics from '../RelatedTopics'
+// import RelatedTopics from '../Rela tedTopics'
 
 const PostPage = () => {
 
@@ -14,8 +14,6 @@ const PostPage = () => {
   const urlCategories = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
   const urlAuthors = `https://eventosyfestivales.com/wp-json/wp/v2/users/`
 
-  
-  
 
   const [dataPost, setDataPost] = useState(null)
   const [dataCategories, setDataCategories] = useState(null)
@@ -90,8 +88,8 @@ const PostPage = () => {
 
             <Content>
                 <LeftSide>
-                  <RelatedTopics/>
-                  {/* <Author props = {state.source.author[post.author]}/> */}
+                  {/* <RelatedTopics/> */}
+                  
                 </LeftSide>
                 <RightSide>
                 <Advertisement>

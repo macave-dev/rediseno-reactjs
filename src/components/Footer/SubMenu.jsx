@@ -36,9 +36,9 @@ const SubMenu = () => {
             <h4>MENÚ</h4>
             <ul>
                 {!information ?  null : (
-                    information.map(item => {
+                    information.map((item,id) => {
                         return(
-                            <li key = {item.id}>
+                            <li key = {id}>
                                  <Link target = '_blank' to={item.url}>{item.title}</Link>
                             </li>
                         )}))}

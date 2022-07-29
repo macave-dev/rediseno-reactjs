@@ -80,7 +80,7 @@ const Section7 = () => {
                             <div className='card__background' style={{backgroundImage: `url(${element.image})`}}></div>
                         </Link>
                         <div className='card__description'>
-                            <Link link={element.url} className='title-link'>
+                            <Link to={element.url} className='title-link'>
                                 <h2>{(element.title)}</h2>
                             </Link>
                             <p>

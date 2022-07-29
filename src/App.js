@@ -1,12 +1,13 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header/Header'
-// import Home from './components/HomeSections/Home'
+import Home from './components/HomeSections/Home'
 import styled from 'styled-components'
-import Categories from './components/Views/Categories'
+import CategoriesPage from './components/Views/CategoriesPage'
 import PostPage from './components/Views/PostPage'
-import Posts from './components/Views/Posts'
 import Footer from './components/Footer/Footer'
+import AuthorPage from './components/Views/AuthorPage'
+import TagsPage from './components/Views/TagsPage'
 
 
 const App = () => {
@@ -15,12 +16,13 @@ const App = () => {
       <Header/>
       <Main>
         <Routes>
-          <Route path='/category/:slug' element = {<Categories/>}/>
+          <Route path ='/' element = {<Home/>}/>
+          <Route path='/tag/:slug' element = {<TagsPage/>}/>
+          <Route path = '/author/:slug' element = {<AuthorPage/>}/>
+          <Route path='/category/:slug' element = {<CategoriesPage/>}/>
           <Route path = "/:slug" element = {<PostPage/>}/>
-          <Route path='posts' element = {<Posts/>}/>
-          </Routes>
+        </Routes>
       </Main>
-  
       <Footer/>
     </>
   
