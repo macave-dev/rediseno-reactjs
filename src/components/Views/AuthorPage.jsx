@@ -11,25 +11,21 @@ const AuthorPage = () => {
   const urlUser = `https://eventosyfestivales.com/wp-json/wp/v2/users/${slug_id[1]}`
   const [author, setAuthor] = useState(null)
 
-
-
   
   const urlPosts = `https://eventosyfestivales.com/wp-json/wp/v2/posts?author=${slug_id[1]}`
   const [posts, setPosts] = useState(null)
 
-  console.log(urlPosts)
-
 
   const fetchAPI = async() => {
     const responseUsers = await fetch(urlUser)
-    const responseCategoryJSON = await responseUsers.json()
+    const responseUSERJSON = await responseUsers.json()
 
 
     const responsePost = await fetch(urlPosts)
     const responsePostJSON = await responsePost.json()
 
     setPosts(responsePostJSON)
-    setAuthor(responseCategoryJSON)
+    setAuthor(responseUSERJSON)
   }
 
 
