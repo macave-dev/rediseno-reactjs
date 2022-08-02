@@ -2,51 +2,38 @@ import React, {useState,useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import InterestedPosts from '../InterestedPosts'
-// import RelatedTopics from '../Rela tedTopics'
+import axios from 'axios'
+
 
 const PostPage = () => {
 
-  const slug = window.location.pathname
-  const slug_f = slug.slice(1)
-
-
-  const urlPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug_f}`
-  const urlCategories = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
-  const urlAuthors = `https://eventosyfestivales.com/wp-json/wp/v2/users/`
-
-
-  const [dataPost, setDataPost] = useState(null)
-  const [dataCategories, setDataCategories] = useState(null)
-  const [dataAuthor, setDataAuthor] = useState(null)
-
-
-  const fetchAPI = async() => {
-    const responsePost = await fetch(urlPost)
-    const responsePostJSON = await responsePost.json()
-
-    const responseCategories = await fetch(urlCategories)
-    const responseCategoriesJSON = await responseCategories.json()
-
-
-    const responseAuthor = await fetch(urlAuthors)
-    const responseAuthorJSON = await responseAuthor.json()
-
-    setDataPost(responsePostJSON[0])
-    setDataCategories(responseCategoriesJSON)
-    setDataAuthor(responseAuthorJSON)
-  }
-
-
-  useEffect(() => {
-    fetchAPI()
-  })
-
-  
-
-  
-
   const [windowState, setWindowState] = useState()
   const ref = useRef();
+
+
+  const [post,setPost] = useState(null)
+  const [categories, setCategories] = useState({})
+  const [author, setAuthor] = useState(null)
+
+  const slug = (window.location.pathname).slice(1)
+
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
+    (response) => {
+      setPost(response.data[0])
+    }
+  )
+
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/categories/`).then(
+    (response) => {
+      setCategories(response.data)
+    }
+  )
+
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
+    (response) => {
+      setAuthor(response.data)
+    }
+  )
 
   useEffect(() => {
     if ( ref.current ) {
@@ -56,21 +43,31 @@ const PostPage = () => {
 
   return (
     <div>
-      {!dataPost ? 'Cargando' :(
-        <Container> 
-           <Title>{dataPost.title.rendered}</Title>
 
-           <DateWrapper>
-              <strong>{dayjs(dataPost.date).format("DD MMMM YYYY")} - </strong>
-              {/* <strong>Autor: {state.source.author[post.author].name} </strong><br/> */}
-            </DateWrapper>
-            <Content>
+    
+
+
+
+      {!post ? null :  
+        <Container data-id="post-container" >
+          <Title >{post.title.rendered}</Title>
+
+          <DateWrapper>
+            <strong>{dayjs(post.date).format("DD MMMM YYYY")} - </strong>
+            
+          </DateWrapper>
+
+
+          <Content>
               <LeftSide>
-                <img src = {dataPost.jetpack_featured_media_url} alt = "" />
+                  <img src = {post.jetpack_featured_media_url} alt = ''></img>
                 <ContentInfo>
-                  <div dangerouslySetInnerHTML={{__html: dataPost.content.rendered}}/>
+                  <div dangerouslySetInnerHTML={{__html: post.content.rendered}}/>
                 </ContentInfo>
-                <InterestedPosts/>
+                  <InterestedPosts/>
+                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  
+                  
               </LeftSide>
 
               <RightSide>
@@ -84,23 +81,11 @@ const PostPage = () => {
                 </Advertisement>
               </RightSide>
             </Content>
+          
 
-
-            <Content>
-                <LeftSide>
-                  {/* <RelatedTopics/> */}
-                  
-                </LeftSide>
-                <RightSide>
-                <Advertisement>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                </Advertisement>
-              </RightSide>
-              </Content>
 
         </Container>
-      )}
+      }
     </div>
   )
 }

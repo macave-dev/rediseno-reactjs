@@ -1,78 +1,69 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
+import axios from 'axios'
 
 const AuthorPage = () => {
 
-  const slug = window.location.pathname
-  const slug_id = slug.split('/author/')
+  const [author, setAuthor] = useState([])
+  const [posts, setPosts] = useState([])
 
-  const urlUser = `https://eventosyfestivales.com/wp-json/wp/v2/users/${slug_id[1]}`
-  const [author, setAuthor] = useState(null)
+  const slug = (window.location.pathname).split('/author/')[1]
 
+
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users?slug=${slug}`).then(
+    (response) => {
+        setAuthor(response.data[0])
+    }
+  )
+
+  const author_id = author.id
   
-  const urlPosts = `https://eventosyfestivales.com/wp-json/wp/v2/posts?author=${slug_id[1]}`
-  const [posts, setPosts] = useState(null)
-
-
-  const fetchAPI = async() => {
-    const responseUsers = await fetch(urlUser)
-    const responseUSERJSON = await responseUsers.json()
-
-
-    const responsePost = await fetch(urlPosts)
-    const responsePostJSON = await responsePost.json()
-
-    setPosts(responsePostJSON)
-    setAuthor(responseUSERJSON)
-  }
-
-
-
-  useEffect(() => {
-    fetchAPI()
-  },[])
-
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?author=${author_id}`).then(
+    (response) => {
+        setPosts(response.data)
+    }
+  )
 
 
 
   return (
     <Items>
-    {/* TITLE */}
-    <div>
-      {!author ? null : 
-        <>
-          <h1>Autor: {author.name}</h1>
-        </>
-      }
-    </div>
-    {/* CONTENT */}
-    <div>
-      {!posts ? null : 
-        posts.map((post) => {
-          return(
-            <Container key = {post.id}>
-              <Link to = {post.link}>
-                <span className='card__background--wrap'>
-                  <span className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></span>
-                </span>
+      {/* TITLE */}
+      <div>
+          {!author ? null : 
+            <>
+              <h1>Autor: {author.name}</h1>
+            </>
+          }
+        </div>
+      {/* CONTENT */}
+      <div>
+        {!posts ? null : 
+          posts.map((post) => {
+            return(
+              <Container key = {post.id}>
+                <Link to = {post.link}>
+                  <span className='card__background--wrap'>
+                    <span className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></span>
+                  </span>
 
-                <span>
-                  <h3>{(post.title.rendered)}</h3>
-                    <ul>
-                      <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
-                      
-                    </ul>
-                </span>
-              </Link>
-            </Container>
-          )
-        })
-      }
+                  <span>
+                    <h3>{(post.title.rendered)}</h3>
+                      <ul>
+                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
+                        
+                      </ul>
+                  </span>
+                </Link>
+              </Container>
+            )
+          })
+        }
 
-    </div>
-  </Items>
+      </div>
+    </Items>
   )
 }
 

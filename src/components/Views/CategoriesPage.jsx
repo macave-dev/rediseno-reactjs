@@ -1,38 +1,28 @@
-import React, {useState,useEffect, useRef} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const CategoriesPage = () => {
 
-  const slug = window.location.pathname
-  const slug_id = slug.split('/category/')
+  const [category, setCategory] = useState([])
+  const [posts, setPosts] = useState([])
 
-  const urlCategory = `https://eventosyfestivales.com/wp-json/wp/v2/categories/${slug_id[1]}`
-  const [category, setCategory] = useState(null)
+  const slug = (window.location.pathname).split('/category/')[1]
 
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/categories?slug=${slug}`).then(
+    (response) => {
+      setCategory(response.data[0])
+    }
+  )
+  
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?categories=${category.id}`).then(
+    (response) => {
+        setPosts(response.data)
+    }
+  )
 
-  const slug_id_post = slug_id[1].slice(0, -1)
-  const urlPostsCategory = `https://eventosyfestivales.com/wp-json/wp/v2/posts?categories=${slug_id_post}`
-  const [posts, setPosts] = useState(null)
-
-  const fetchAPI = async() => {
-    const responseCategory = await fetch(urlCategory)
-    const responseCategoryJSON = await responseCategory.json()
-
-
-    const responsePost = await fetch(urlPostsCategory)
-    const responsePostJSON = await responsePost.json()
-
-    setPosts(responsePostJSON)
-    setCategory(responseCategoryJSON)
-  }
-
-
-
-  useEffect(() => {
-    fetchAPI()
-  },[])
 
   
   return (
@@ -155,15 +145,3 @@ const Items = styled.div`
     margin-bottom: 40px;
   }
 `
-const Header = styled.h3`
-  font-weight: 300;
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 1.6rem;
-`;
-const Bold = styled.b`
-  font-weight: 700;
-`;
-
-const W100 = styled.div`
-  width: 100%;
-`;

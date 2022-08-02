@@ -1,37 +1,29 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
+import axios from 'axios'
 
 const TagsPage = () => {
 
-  const slug = window.location.pathname
-  const slug_id = slug.split('/tag/')
+  const [tag, setTag] = useState([])
+  const [posts, setPosts] = useState([])
 
-  const urlTag = `https://eventosyfestivales.com/wp-json/wp/v2/tags/${slug_id[1]}`
-  const [tag, setTag] = useState(null)
+  const slug = (window.location.pathname).split('/tag/')[1]
 
-  const urlPosts = `https://eventosyfestivales.com/wp-json/wp/v2/posts?tags=${slug_id[1]}`
-  const [posts, setPosts] = useState(null)
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/tags?slug=${slug}`).then(
+    (response) => {
+      setTag(response.data[0])
+    }
+  )
+  
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?tags=${tag.id}`).then(
+    (response) => {
+        setPosts(response.data)
+    }
+  )
 
   
-  const fetchAPI = async() => {
-    const responseTags = await fetch(urlTag)
-    const responseTagJSON = await responseTags.json()
-
-
-    const responsePost = await fetch(urlPosts)
-    const responsePostJSON = await responsePost.json()
-
-    setTag(responseTagJSON)
-    setPosts(responsePostJSON)
-  }
-
-
-
-  useEffect(() => {
-    fetchAPI()
-  },[])
 
   return (
     <Items>
@@ -44,33 +36,31 @@ const TagsPage = () => {
         }
       </div>
 
-
       {/* CONTENT */}
-    <div>
-      {!posts ? null : 
-        posts.map((post) => {
-          return(
-            <Container key = {post.id}>
-              <Link to = {post.link}>
-                <span className='card__background--wrap'>
-                  <span className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></span>
-                </span>
+      <div>
+        {!posts ? null : 
+          posts.map((post) => {
+            return(
+              <Container key = {post.id}>
+                <Link to = {post.link}>
+                  <span className='card__background--wrap'>
+                    <span className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></span>
+                  </span>
 
-                <span>
-                  <h3>{(post.title.rendered)}</h3>
-                    <ul>
-                      <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
-                      
-                    </ul>
-                </span>
-              </Link>
-            </Container>
-          )
-        })
-      }
+                  <span>
+                    <h3>{(post.title.rendered)}</h3>
+                      <ul>
+                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
+                        
+                      </ul>
+                  </span>
+                </Link>
+              </Container>
+            )
+          })
+        }
 
-    </div>
-
+      </div>
 
       
     </Items>
@@ -158,15 +148,3 @@ const Items = styled.div`
     margin-bottom: 40px;
   }
 `
-const Header = styled.h3`
-  font-weight: 300;
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 1.6rem;
-`;
-const Bold = styled.b`
-  font-weight: 700;
-`;
-
-const W100 = styled.div`
-  width: 100%;
-`;
