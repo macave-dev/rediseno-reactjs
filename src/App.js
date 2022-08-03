@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header/Header'
 import Home from './components/HomeSections/Home'
@@ -8,15 +8,71 @@ import PostPage from './components/Views/PostPage'
 import Footer from './components/Footer/Footer'
 import AuthorPage from './components/Views/AuthorPage'
 import TagsPage from './components/Views/TagsPage'
-
+import axios from 'axios'
+import PrivacyPage from './components/Views/PrivacyPage'
+import ContactPage from './components/Views/ContactPage'
+import IntroducePage from './components/Views/IntroducePage'
+import TermsAndConditions from './components/Views/TermsAndContionsPage'
 
 const App = () => {
+
+  const current_url = `https://eventosyfestivales.com${window.location.pathname}`
+
+  const [schema,setSchema] = useState(null)
+
+  axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
+    (response) => {
+      setSchema(response.data)
+    }
+  )
+
+
+
   return (
     <>
+      {!schema ? null : 
+      <>
+  
+        {/* DEFINE SCHEMA */}
+        <script type="application/ld+json">
+          {
+            `{
+              "@context": "http://schema.org/",
+              "@type": "NewsMediaOrganization",
+              "name" : "${schema.Name}",
+              "url" : "${schema.URL}",
+              "logo": "${schema.Logo}",
+              "description" : "${schema.Description}",
+              "actionableFeedbackPolicy": "${schema.Policy}",
+              "foundingDate": "",
+              "sameAs": ""
+            }`
+          }
+        </script>
+
+        {/* MAIN META TAGS */}
+        <meta data-rh="true" name="description" content={schema.Description}/>
+        <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
+        <meta data-rh="true" property="fb:app_id" content={schema.FacebookId}/>
+        <meta data-rh="true" property="og:type" content="article"/>
+        <meta data-rh="true" property="og:title" content={schema.Name}/>
+        <meta data-rh="true" property="og:site_name" content={schema.Name}/>
+        <meta data-rh="true" property="og:url" content={current_url}/>
+        <meta data-rh="true" property="og:image" content={schema.SiteImage}/>
+        <meta data-rh="true" property="og:description" content={schema.Description}/>
+        <title data-rh="true">{schema.Name} | {schema.Description}</title>
+      </>
+      }
+
       <Header/>
+      
       <Main>
         <Routes>
           <Route path ='/' element = {<Home/>}/>
+          <Route path = 'terminos-y-condiciones' element = {<TermsAndConditions/>}/>
+          <Route path = 'quienes-somos' element = {<IntroducePage/>}/>
+          <Route path = 'contacto' element = {<ContactPage/>}/>
+          <Route path = 'politica-de-privacidad' element = {<PrivacyPage/>}/>
           <Route path='/tag/:slug' element = {<TagsPage/>}/>
           <Route path = '/author/:slug' element = {<AuthorPage/>}/>
           <Route path='/category/:slug' element = {<CategoriesPage/>}/>

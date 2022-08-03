@@ -44,10 +44,6 @@ const PostPage = () => {
   return (
     <div>
 
-    
-
-
-
       {!post ? null :  
         <Container data-id="post-container" >
           <Title >{post.title.rendered}</Title>
@@ -65,19 +61,19 @@ const PostPage = () => {
                   <div dangerouslySetInnerHTML={{__html: post.content.rendered}}/>
                 </ContentInfo>
                   <InterestedPosts/>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
                   
                   
               </LeftSide>
 
               <RightSide>
                 <Advertisement>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
                 </Advertisement>
                 <Advertisement>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                  <img src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
                 </Advertisement>
               </RightSide>
             </Content>
@@ -219,24 +215,11 @@ const ContentInfo = styled.div`
     font-weight: 500;
   }
 `
-const PostInfo = styled.div`
-    background-image: linear-gradient(to right, #f4f4f4f, #fff);
-    margin-bottom: 1em;
-    padding: 0.5em;
-    border-left: 4px solid lightseagreen;
-    font-size: 0.8em;
-    & > a{
-        margin: 0px;
-    }
-`
+
 const Advertisement = styled.div`
   img{
       margin-bottom: 16px;
       width: 100%;
       height: auto; 
   }
-`
-const Paragraph = styled.div`
-  display: block;
-  margin-bottom: 10px;
 `
