@@ -131,7 +131,6 @@ const PostPage = () => {
 
           <DateWrapper>
             <strong>{dayjs(post.date).format("DD MMMM YYYY")} - </strong>
-            
           </DateWrapper>
 
 
@@ -158,9 +157,7 @@ const PostPage = () => {
                 </Advertisement>
               </RightSide>
             </Content>
-          
-
-
+        
         </Container>
       }
     </div>

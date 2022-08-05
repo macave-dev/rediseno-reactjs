@@ -6,8 +6,8 @@ import LeftArrowIcon from "../svg/leftArrowIcon"
 import RightArrowIcon from "../svg/rightArrowIcon"
 import uniqueId from 'lodash/uniqueId';
 import { Link } from 'react-router-dom'
-
-
+import axios from 'axios';
+import he from 'he'
 
 function PrevArrow(props) {
     const { className, style, onClick } = props;
@@ -16,34 +16,29 @@ function PrevArrow(props) {
             <LeftArrowIcon></LeftArrowIcon>
         </div>
     );
-  }
+}
   
-  function NextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div className={className} onClick={onClick}>
-            <RightArrowIcon></RightArrowIcon>
-        </div>
-    );
-  }
+function NextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+      <div className={className} onClick={onClick}>
+          <RightArrowIcon></RightArrowIcon>
+      </div>
+  );
+}
+
 
 const InterestedPosts = () => {
 
-    const slug = window.location.pathname
-    const slug_f = slug.slice(1)
-    const urlPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug_f}`
-    const [dataPost, setDataPost] = useState(null)
+    const slug = (window.location.pathname).slice(1)
+    const [post, setPost] = useState([])
 
-    const fetchAPI = async() => {
-        const responsePost = await fetch(urlPost)
-        const responsePostJSON = await responsePost.json()    
-        setDataPost(responsePostJSON[0]['jetpack-related-posts'])
-    }
-    
-    
     useEffect(() => {
-        fetchAPI()
-    },[])
+        axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
+            (response) => {
+                setPost(response.data[0]['jetpack-related-posts'])
+            })
+    })
 
 
     const settings = {
@@ -85,27 +80,28 @@ const InterestedPosts = () => {
           ]
         };
     
-
-
   return (
     <InterestedSlider>
-        <h3>Te puede interesar</h3>
+        <h3> Te puede interesar</h3>
+
         <InterestedSliderContent>
-            {!dataPost ? null : (
-                dataPost.map(element => {
-                    return (
-                        <div key = {element.id} >
-                            <CardContent>
-                                <div className='card__background--wrap'>
-                                    <div className='card__background' style={{backgroundImage: `url(${element.img.src})`}}></div>
-                                </div>
-                                <p>{(element.title)}</p> 
-                            </CardContent>
-                        </div>
-                    )
-                })
-            )}
-        </InterestedSliderContent>
+                <Slider {...settings}>
+                {post.map((element,id) => {
+                        let shortDescription = `${(element.excerpt.substr(0, 55)).trim()}...`
+                        
+                        return (
+                            <a href = {element.url}>
+                                <CardContent>
+                                    <div className='card__background--wrap'>
+                                        <div className='card__background' style={{backgroundImage: `url(${element.img.src})`}}></div>
+                                    </div>
+                                    <p>{he.decode(element.title)}</p> 
+                                </CardContent>
+                            </a>
+                        )
+                    })}
+                </Slider>
+            </InterestedSliderContent>
     </InterestedSlider>
   )
 }
