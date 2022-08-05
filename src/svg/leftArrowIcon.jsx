@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import uniqueId from 'lodash/uniqueId';
+import React from 'react';
+
 
 const LeftArrowIcon = ({state, props}) => { 
-    const [id] = useState(uniqueId('left-arrow-'));
+
     return (
         <svg viewBox="0 0 14.965 27.796" xmlns="http://www.w3.org/2000/svg">
             <defs>

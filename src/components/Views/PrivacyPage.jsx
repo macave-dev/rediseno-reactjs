@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-
+import {Helmet} from "react-helmet";
 
 
 const PrivacyPage = () => {
@@ -16,6 +16,11 @@ const PrivacyPage = () => {
     )
 
   return (
+    <>
+      <Helmet>
+        <title>Politica de privacidad</title>
+      </Helmet>
+
     <Container>
         {!data ? '':
             <>
@@ -32,6 +37,9 @@ const PrivacyPage = () => {
             </>
         }
     </Container>
+    
+    </>
+    
   )
 }
 

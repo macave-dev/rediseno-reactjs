@@ -3,9 +3,12 @@ import styled from 'styled-components'
 import dayjs from 'dayjs'
 import InterestedPosts from '../InterestedPosts'
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 
 
 const PostPage = () => {
+
+  const current_url = `https://eventosyfestivales.com${window.location.pathname}`
 
   const [windowState, setWindowState] = useState()
   const ref = useRef();
@@ -14,10 +17,12 @@ const PostPage = () => {
   const [post,setPost] = useState(null)
   const [categories, setCategories] = useState({})
   const [author, setAuthor] = useState(null)
+  const [schema,setSchema] = useState(null)
 
   const slug = (window.location.pathname).slice(1)
 
-  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
+  useEffect(() => {
+    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
     (response) => {
       setPost(response.data[0])
     }
@@ -35,6 +40,16 @@ const PostPage = () => {
     }
   )
 
+
+  axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
+    (response) => {
+      setSchema(response.data)
+    }
+  )
+  })
+
+  
+
   useEffect(() => {
     if ( ref.current ) {
       setWindowState( true )
@@ -42,7 +57,70 @@ const PostPage = () => {
   })
 
   return (
-    <div>
+    <div>  
+        {!post || !schema ?  null :
+          <Helmet>
+            <link data-rh="true" rel="preload" as="image" imagesrcset={post.jetpack_featured_media_url}/>
+            <meta data-rh="true" name="description" content={post.yoast_head_json.og_description}/>
+            <meta data-rh="true" name="twitter:card" content="summary_large_image"/>
+            <meta data-rh="true" name="twitter:site" content={schema.Name}/>
+            <meta data-rh="true" name="twitter:title" content={post.title.rendered}/>
+            <meta data-rh="true" name="twitter:description" content={post.yoast_head_json.og_description}/>
+            <meta data-rh="true" name="twitter:image" content={post.jetpack_featured_media_url}/>
+            <meta data-rh="true" name="robots" content="max-image-preview:large"/>
+            <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
+            <meta data-rh="true" property="fb:app_id" content={schema.FacebookId}/>
+            <meta data-rh="true" property="og:type" content="article"/>
+            <meta data-rh="true" property="og:title" content={post.title.rendered}/>
+            <meta data-rh="true" property="og:site_name" content={schema.Name}/>
+            <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  
+            <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
+            <title>{post.title.rendered}</title>
+          </Helmet>
+        }
+        
+        {!post || !schema ? '':
+            <>
+                 <script type="application/ld+json">{
+                    `{
+                        "@context":"https://schema.org",
+                        "@type":"NewsArticle",
+                        "mainEntityOfPage":{
+                            "@type":"WebPage",
+                            "@id":"${post.link}" 
+                        },
+                        "headline":"${post.title.rendered}",
+                        "image":{
+                            "@type":"ImageObject",
+                            "url":"${post.jetpack_featured_media_url}",
+                            "width":1200,
+                            "height":652
+                        },
+                        "datePublished":"${post.date}", 
+                        "dateModified":"${post.date_gmt}", 
+                        "author":{
+                            "@type":"Person",
+                           
+                            "jobTitle": "Journalist",
+                            
+                        },
+                        "publisher":{
+                            "@type":"Organization",
+                            "name":"${schema.Name}",
+                            "url": "${current_url}",
+                            "logo":{
+                              "@type":"ImageObject",
+                              "url":"${schema.Logo}" 
+                            }
+                        }
+                    }`
+                    }
+                </script>
+                
+            </>
+           
+        }
+
 
       {!post ? null :  
         <Container data-id="post-container" >

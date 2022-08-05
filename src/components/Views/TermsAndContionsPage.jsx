@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import {Helmet} from 'react-helmet'
 
 
 
@@ -17,7 +18,11 @@ const TermsAndConditions =() => {
 
 
   return (
-    <Container>
+    <>
+      <Helmet>
+        <title>Terminos y condiciones de uso de privacidad.</title>
+      </Helmet>
+      <Container>
         {!data ? '':
             <>
                 {data.map(item => {
@@ -33,7 +38,10 @@ const TermsAndConditions =() => {
                 })}
             </>
         }
-    </Container>
+      </Container>
+    
+    </>
+    
   )
 }
 

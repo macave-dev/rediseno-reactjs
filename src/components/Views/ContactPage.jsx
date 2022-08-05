@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-
+import {Helmet} from "react-helmet";
 
 
 const ContactPage = () => {
@@ -16,7 +16,11 @@ const ContactPage = () => {
     )
 
   return (
-    <Container>
+    <>
+      <Helmet>
+        <title>Contacto</title>
+      </Helmet>
+      <Container>
         {!data ? '':
             <>
                 {data.map(item => {
@@ -32,6 +36,9 @@ const ContactPage = () => {
             </>
         }
     </Container>
+    
+    </>
+    
   )
 }
 
