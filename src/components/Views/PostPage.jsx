@@ -76,7 +76,7 @@ const PostPage = () => {
             <meta data-rh="true" property="og:site_name" content={schema.Name}/>
             <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  
             <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
-            <title>{post.title.rendered}</title>
+            <title>{he.decode(post.title.rendered)}</title>
           </Helmet>
         }
         
@@ -90,7 +90,7 @@ const PostPage = () => {
                             "@type":"WebPage",
                             "@id":"${post.link}" 
                         },
-                        "headline":"${post.title.rendered}",
+                        "headline":"${he.decode(post.title.rendered)}",
                         "image":{
                             "@type":"ImageObject",
                             "url":"${post.jetpack_featured_media_url}",

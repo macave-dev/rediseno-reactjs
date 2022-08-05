@@ -29,7 +29,7 @@ const TagsPage = () => {
 
   return (
     <>
-    {!tag ?  null : 
+    {!tag ?  null :
       <Helmet> 
         <title>{`${tag.name} archivos`}</title>
       </Helmet>
