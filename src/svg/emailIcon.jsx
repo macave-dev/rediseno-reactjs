@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const EmailIcon = (props) => { 
+const EmailIcon = () => { 
     return (
         <svg enableBackground="new 0 0 490 490" version="1.1" viewBox="0 0 490 490" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg">
 			<path d="M295.2,257.8L251.4,295c-3.5,2.9-8.6,2.9-12,0l-43.8-37.1L16.7,409.1h456.6L295.2,257.8z"/>

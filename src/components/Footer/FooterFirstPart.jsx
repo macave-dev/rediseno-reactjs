@@ -1,6 +1,5 @@
 import React, {useEffect,useState} from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import FbIcon from '../../svg/fbIcon';
 import Logo from '../Header/Logo';
 import YtIcon from '../../svg/ytIcon';
@@ -31,24 +30,24 @@ const FooterFirstPart = () => {
             {!infoSchema ? null : (
                 <ul>
                     <li>
-                        <Link target="_blank" to={infoSchema.Facebook}>
+                        <a target="_blank" href={infoSchema.Facebook}>
                             <FbIcon />
-                        </Link>
+                        </a>
                     </li>
                     <li>
-                        <Link target="_blank" to={infoSchema.Instagram}>
+                        <a target="_blank" href={infoSchema.Instagram}>
                             <InstagramIcon></InstagramIcon>
-                        </Link>
+                        </a>
                     </li>
                     <li>
-                        <Link target="_blank" to={infoSchema.Twitter}>
+                        <a target="_blank" href={infoSchema.Twitter}>
                             <TwitterIcon></TwitterIcon>
-                        </Link>
+                        </a>
                     </li>
                     <li>
-                        <Link target="_blank" to={infoSchema.YouTube}>
+                        <a target="_blank" href={infoSchema.YouTube}>
                             <YtIcon></YtIcon>
-                        </Link>
+                        </a>
                     </li>
                 </ul>
             )}

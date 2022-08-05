@@ -10,7 +10,7 @@ const SubMenu = ({props}) => {
                 {props.map((item,id) => {
                   return(
                     <li key = {id}>
-                        <Link to = {item.url} target = "_blank">{item.title}</Link>
+                        <a href = {item.url} target = "_blank">{item.title}</a>
                     </li>
                 )})} 
             </ul>

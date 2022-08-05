@@ -96,10 +96,10 @@ const Section4 = () => {
                         {(() => {
                             if ( information.URLSection4 ) {
                                 return(
-                                    <Link to ={information.URLSection4}> 
+                                    <a href ={information.URLSection4}> 
                                         <GoToIcon></GoToIcon>
                                         <span>Ver todas</span>
-                                    </Link>
+                                    </a>
                                 )
                             }
                         })()}
@@ -118,20 +118,20 @@ const Section4 = () => {
                                             <div className='card__background' style={{backgroundImage: `url(${element.image})`}}></div>
                                             <div className='card__opacity'></div>
                                             <div className='card__description'>
-                                                <Link to={element.url} key = {'title-'+element.id}>
+                                                <a href={element.url} key = {'title-'+element.id}>
                                                     <h2>
                                                         {(element.title)}
                                                     </h2>
-                                                </Link>
+                                                </a>
                                                 <ul>
                                                     <li>
                                                         <span>{dayjs(element.date).format("DD MMMM YYYY")}</span>
                                                     </li>
                                                     <li>
-                                                        <Link to={element.url} className="button__general--go-to" key = {element.id}>
+                                                        <a href={element.url} className="button__general--go-to" key = {element.id}>
                                                             <i className='icon-go-to'><GoToIcon></GoToIcon></i>
                                                             <span>Ver más</span>
-                                                        </Link>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </div>

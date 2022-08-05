@@ -139,7 +139,7 @@ const Section1 = ({props}) => {
                     dataHome.info.map((element,index) => {
                         
                         return (
-                            <a key = {element.url} id = {'el-'+element.id} className="active" onMouseEnter={toggleHover('el-'+element.id,index)} data-id={element.id}>
+                            <a href = {element.url} key = {element.url} id = {'el-'+element.id} className="active" onMouseEnter={toggleHover('el-'+element.id,index)} data-id={element.id}>
                                 <CardContent>
                                     <div className='card__background' style={{backgroundImage: `url(${element.image})`}}></div>
                                     <div className='card__opacity'></div>

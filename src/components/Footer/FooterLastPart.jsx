@@ -1,5 +1,4 @@
 import React, {useEffect,useState} from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 const FooterLastPart = () => {
@@ -21,14 +20,14 @@ const FooterLastPart = () => {
                 <div>
                     <ul>
                         <li>
-                            <Link target="_blank" to='/politica-de-privacidad/'>Aviso de privacidad</Link>
+                            <a target="_blank" href='/politica-de-privacidad/'>Aviso de privacidad</a>
                         </li>
                         <li>
-                            <Link target="_blank" to = '/terminos-y-condiciones-de-uso-aviso-de-privacidad/'>Términos y condiciones </Link>
+                            <a target="_blank" href = '/terminos-y-condiciones-de-uso-aviso-de-privacidad/'>Términos y condiciones </a>
                         </li>
                     </ul>
                     <div>
-                        <p> Desarrollado por <Link to = 'https://macave.mx/' target = 'blank'> Macave. </Link>Copyright C 2022 - 2023
+                        <p> Desarrollado por <a href = 'https://macave.mx/' target = 'blank'> Macave. </a>Copyright C 2022 - 2023
                         </p>
                     </div>
                 </div>

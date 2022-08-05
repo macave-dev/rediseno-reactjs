@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from 'react';
-import {Link} from 'react-router-dom'
+
 import dayjs from 'dayjs';
 import GoToIcon from '../../svg/goToIcon';
 import uniqueId from 'lodash/uniqueId'
@@ -86,10 +86,10 @@ const setHoverCard = (wrapElement,siblingsElements, id, fromHover) => {
                     {(() => {
                         
                             return(
-                                <Link to ={information.URLSection5}> 
+                                <a href ={information.URLSection5}> 
                                     <GoToIcon></GoToIcon>
                                     <span>Ver todas</span>
-                                </Link>
+                                </a>
                             )
                         
                     })()}
@@ -108,16 +108,16 @@ const setHoverCard = (wrapElement,siblingsElements, id, fromHover) => {
                                     <div className='card__background' style={{backgroundImage: `url(${element.image})`}}></div>
                                 </div>
                                 <div className='card__description'>
-                                    <Link to={element.url} className='title-link'>
+                                    <a href={element.url} className='title-link'>
                                         <h2>
                                             {(element.title)}
                                         </h2>
-                                    </Link>
+                                    </a>
                                     <p>{shortDescription}</p>
-                                    <Link className='link__general--go-to' to={element.url}>
+                                    <a className='link__general--go-to' href={element.url}>
                                         <GoToIcon></GoToIcon>
                                         <span>Ver más</span>
-                                    </Link>
+                                    </a>
                                 </div>
                             </CardContent>
                         )

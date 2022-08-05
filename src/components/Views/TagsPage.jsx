@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import axios from 'axios'
+import he from 'he'
+import { Helmet } from 'react-helmet'
+
 
 const TagsPage = () => {
 
@@ -26,6 +28,13 @@ const TagsPage = () => {
   
 
   return (
+    <>
+    {!tag ?  null : 
+      <Helmet> 
+        <title>{`${tag.name} archivos`}</title>
+      </Helmet>
+    }
+    
     <Items>
       {/* TITLE */}
       <div>
@@ -42,28 +51,30 @@ const TagsPage = () => {
           posts.map((post) => {
             return(
               <Container key = {post.id}>
-                <Link to = {post.link}>
+                <a href = {post.link}>
                   <span className='card__background--wrap'>
                     <span className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></span>
                   </span>
 
                   <span>
-                    <h3>{(post.title.rendered)}</h3>
+                    <h3>{he.decode(post.title.rendered)}</h3>
                       <ul>
                         <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
                         
                       </ul>
                   </span>
-                </Link>
+                </a>
               </Container>
             )
           })
         }
 
       </div>
-
-      
     </Items>
+    
+    
+    </>
+    
   )
 }
 

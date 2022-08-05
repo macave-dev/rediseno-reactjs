@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react';
-import { Link } from 'react-router-dom';
 import SubMenuFooter from './SubMenu';
 import FooterFirstPart from './FooterFirstPart';
 import FooterLastPart from './FooterLastPart';
@@ -37,7 +36,7 @@ const Footer = () => {
                         </DIRECCION>
                         <CONTACTO className='contact-column'>
                             <h4>CONTACTO</h4>
-                            <Link to={`mailto:${information.Contacto}`} target="_blank">{information.Contacto}</Link>
+                            <a href={`mailto:${information.Contacto}`} target="_blank">{information.Contacto}</a>
                         </CONTACTO>
                     </div>
                 )}

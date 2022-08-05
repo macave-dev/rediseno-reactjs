@@ -1,7 +1,6 @@
 import React, {useEffect,useState} from 'react';
 import styled from 'styled-components'
 import dayjs from 'dayjs';
-import {Link} from 'react-router-dom'
 import GoToIcon from '../../svg/goToIcon';
 
 
@@ -28,10 +27,10 @@ const Section6 = () => {
                     {(() => {
                         if ( information.URLSection6 ) {
                             return(
-                                <Link to ={information.URLSection6}> 
+                                <a href ={information.URLSection6}> 
                                     <GoToIcon></GoToIcon>
                                     <span>Ver todas</span>
-                                </Link>
+                                </a>
                             )
                         }
                     })()}
@@ -52,7 +51,7 @@ const Section6 = () => {
                     information.info6.map((element,index) => {
                         
                         return (
-                            <Link className = 'CardContent' key={element.id} to = {element.url} >
+                            <a className = 'CardContent' key={element.id} href = {element.url} >
                                 <div className='card__background' style={{backgroundImage: `url(${element.image})`}}></div>
                                 <div className='card__description'>
                                         <h2>
@@ -62,7 +61,7 @@ const Section6 = () => {
                                         {dayjs(element.date).format("DD MMMM YYYY")}
                                     </p>
                                 </div>
-                            </Link>
+                            </a>
                         )
                     })
                 }

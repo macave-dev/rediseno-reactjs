@@ -1,6 +1,5 @@
 import React,{useState,useEffect, useRef} from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 const SubMenu = () => {
 
@@ -39,7 +38,7 @@ const SubMenu = () => {
                     information.map((item,id) => {
                         return(
                             <li key = {id}>
-                                 <Link target = '_blank' to={item.url}>{item.title}</Link>
+                                 <a target = '_blank' href={item.url}>{item.title}</a>
                             </li>
                         )}))}
             </ul>

@@ -32,10 +32,10 @@ const Section2 = () => {
                         {(() => {
                             if ( information.URLSection2 ) {
                                 return(
-                                    <Link to ={information.URLSection2}> 
+                                    <a href ={information.URLSection2}> 
                                         <GoToIcon></GoToIcon>
                                         <span>Ver todas</span>
-                                    </Link>
+                                    </a>
                                 )
                             }
                         })()}
@@ -50,25 +50,25 @@ const Section2 = () => {
                         
                         return (
                             <Article key = {element.id}>
-                                <Link to={element.url}>
+                                <a href={element.url}>
                                     <span className='card__background--wrap'>
                                         <span className='card__background' style={{backgroundImage: `url(${element.image})`}}></span>
                                     </span>
-                                </Link>
+                                </a>
                                 <CardContent>
-                                    <Link to={element.url} className='title-link'>
+                                    <a href={element.url} className='title-link'>
                                         <h2>
                                             {(element.title)}
                                         </h2>
-                                    </Link>
+                                    </a>
                                     <p>
                                         {dayjs(element.date).format("DD MMMM YYYY")} - {information.titleSection2}
                                     </p>
                                     <span>{element.author}</span>
-                                    <Link to={element.url} className="button__general--go-to" >
+                                    <a href={element.url} className="button__general--go-to" >
                                         <i><img src = {Go_to_icon} /></i>
                                         <span>Ver más</span>
-                                    </Link>
+                                    </a>
                                 </CardContent>
                             </Article>
                         )

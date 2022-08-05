@@ -1,7 +1,6 @@
 import React, {useEffect,useState} from 'react';
 import styled from 'styled-components'
 import dayjs from 'dayjs';
-import {Link} from 'react-router-dom'
 import GoToIcon from '../../svg/goToIcon';
 import Go_to_icon from '../../assets/Go_to_icon.svg';
 
@@ -30,10 +29,10 @@ const Section7 = () => {
                     {(() => {
                         if ( information.URLSection7 ) {
                             return(
-                                <Link to ={information.URLSection7}> 
+                                <a href ={information.URLSection7}> 
                                     <GoToIcon></GoToIcon>
                                     <span>Ver todas</span>
-                                </Link>
+                                </a>
                             )
                         }
                     })()}
@@ -48,10 +47,10 @@ const Section7 = () => {
     <h2>{(information.info7[0].title)}</h2>
     <p>{information.info7[0].metadescription}</p>
    
-    <Link to={information.info7[0].url } className="button__general--go-to" >
+    <a href={information.info7[0].url } className="button__general--go-to" >
         <i><img src = {Go_to_icon} /></i>
         <span>Ver más</span>
-    </Link>
+    </a>
 
 </>
     
@@ -62,9 +61,9 @@ const Section7 = () => {
 
 <CardContentVideo>
     { !information ? '': 
-        <Link to = {information.info7[0].url}>
+        <a href = {information.info7[0].url}>
              <img src = {information.info7[0].image} /> 
-        </Link>
+        </a>
     }
 </CardContentVideo>
 
@@ -76,13 +75,13 @@ const Section7 = () => {
             <CardContentImage className='CardContentImage' key = {element.id}>
                 {!information ? "":
                     <>
-                        <Link to = {element.url} className='card__background--wrap'>
+                        <a href = {element.url} className='card__background--wrap'>
                             <div className='card__background' style={{backgroundImage: `url(${element.image})`}}></div>
-                        </Link>
+                        </a>
                         <div className='card__description'>
-                            <Link to={element.url} className='title-link'>
+                            <a href={element.url} className='title-link'>
                                 <h2>{(element.title)}</h2>
-                            </Link>
+                            </a>
                             <p>
                                 {dayjs(element.date).format("DD MMMM YYYY")} - {information.titleSection5}
                             </p>

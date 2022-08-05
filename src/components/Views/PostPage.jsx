@@ -4,15 +4,13 @@ import dayjs from 'dayjs'
 import InterestedPosts from '../InterestedPosts'
 import axios from 'axios'
 import { Helmet } from 'react-helmet'
+import SharePostBar from '../SharePostBar'
+import he from 'he'
 
 
 const PostPage = () => {
 
   const current_url = `https://eventosyfestivales.com${window.location.pathname}`
-
-  const [windowState, setWindowState] = useState()
-  const ref = useRef();
-
 
   const [post,setPost] = useState(null)
   const [categories, setCategories] = useState({})
@@ -21,40 +19,43 @@ const PostPage = () => {
 
   const slug = (window.location.pathname).slice(1)
 
+  const [windowState, setWindowState] = useState()
+  const ref = useRef();
+
   useEffect(() => {
+    setWindowState( false )
+    
     axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
-    (response) => {
-      setPost(response.data[0])
-    }
-  )
+      (response) => {
+        setPost(response.data[0])
+      })
 
-  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/categories/`).then(
-    (response) => {
-      setCategories(response.data)
-    }
-  )
+    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/categories/`).then(
+      (response) => {
+        setCategories(response.data)
+      })
 
-  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
-    (response) => {
-      setAuthor(response.data)
-    }
-  )
+    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
+      (response) => {
+        setAuthor(response.data)
+      })
 
 
-  axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
-    (response) => {
-      setSchema(response.data)
-    }
-  )
+    axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
+      (response) => {
+        setSchema(response.data)
+      })
+  
   })
 
-  
 
   useEffect(() => {
     if ( ref.current ) {
       setWindowState( true )
     }
   })
+
+  
 
   return (
     <div>  
@@ -121,10 +122,12 @@ const PostPage = () => {
            
         }
 
+      <SharePostBar props = {windowState} />
+
 
       {!post ? null :  
         <Container data-id="post-container" >
-          <Title >{post.title.rendered}</Title>
+          <Title >{he.decode(post.title.rendered)}</Title>
 
           <DateWrapper>
             <strong>{dayjs(post.date).format("DD MMMM YYYY")} - </strong>
@@ -165,7 +168,6 @@ const PostPage = () => {
 }
 
 export default PostPage
-
 
 const Container = styled.div`
   max-width: 870px;
@@ -293,11 +295,24 @@ const ContentInfo = styled.div`
     font-weight: 500;
   }
 `
-
+const PostInfo = styled.div`
+    background-image: linear-gradient(to right, #f4f4f4f, #fff);
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border-left: 4px solid lightseagreen;
+    font-size: 0.8em;
+    & > a{
+        margin: 0px;
+    }
+`
 const Advertisement = styled.div`
   img{
       margin-bottom: 16px;
       width: 100%;
       height: auto; 
   }
+`
+const Paragraph = styled.div`
+  display: block;
+  margin-bottom: 10px;
 `

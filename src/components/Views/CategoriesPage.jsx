@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
+import he from 'he'
+import {Helmet} from 'react-helmet'
 
 const CategoriesPage = () => {
 
-  const [category, setCategory] = useState([])
-  const [posts, setPosts] = useState([])
+  const [category, setCategory] = useState('')
+  const [posts, setPosts] = useState('')
 
   const slug = (window.location.pathname).split('/category/')[1]
 
@@ -22,11 +23,16 @@ const CategoriesPage = () => {
         setPosts(response.data)
     }
   )
-
-
   
   return (
-    <Items>
+    <>
+     
+        {!category ? null :  
+          <Helmet>
+            <title>{`${category.name} archivos`}</title>
+          </Helmet>}
+      
+      <Items>
       {/* TITLE */}
       <div>
         {!category ? null : 
@@ -41,19 +47,19 @@ const CategoriesPage = () => {
           posts.map((post) => {
             return(
               <Container key = {post.id}>
-                <Link to = {post.link}>
+                <a href = {post.link}>
                   <span className='card__background--wrap'>
                     <span className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></span>
                   </span>
 
                   <span>
-                    <h3>{(post.title.rendered)}</h3>
+                    <h3>{he.decode(post.title.rendered)}</h3>
                       <ul>
                         <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
                         
                       </ul>
                   </span>
-                </Link>
+                </a>
               </Container>
             )
           })
@@ -61,6 +67,8 @@ const CategoriesPage = () => {
 
       </div>
     </Items>
+    
+    </>
   )
 }
 

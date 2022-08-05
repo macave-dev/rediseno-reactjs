@@ -1,5 +1,4 @@
 import React, {useEffect,useState} from 'react';
-import {Link} from 'react-router-dom'
 import dayjs from 'dayjs'
 import GoToIcon from '../../svg/goToIcon'
 import styled from 'styled-components';
@@ -28,10 +27,10 @@ const Section8 = () => {
                     {(() => {
                         
                             return(
-                                <Link to ={information.URLSection8}> 
+                                <a href ={information.URLSection8}> 
                                     <GoToIcon></GoToIcon>
                                     <span>Ver todas</span>
-                                </Link>
+                                </a>
                             )
                         
                     })()}
@@ -46,13 +45,13 @@ const Section8 = () => {
                         return (
                             
                             <CardContent key = {element.id}>
-                                <Link to = {element.url} className='card__background--wrap'>
+                                <a href = {element.url} className='card__background--wrap'>
                                     <div className='card__background' style={{backgroundImage: `url(${element.image})`}}></div>
-                                </Link>
+                                </a>
                                 <div className='card__description'>
-                                    <Link to={element.url} className='title-link'>
+                                    <a href={element.url} className='title-link'>
                                         <h2>{(element.title)}</h2>
-                                    </Link>
+                                    </a>
                                     <p className='card__description'>{element.metadescription[0]}</p>
                                     <p>
                                         {dayjs(element.date).format("DD MMMM YYYY")} - {information.titleSection10}
