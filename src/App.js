@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header/Header'
-import Home from './components/HomeSections/Home'
+import Home from './components/Views/Home'
 import styled from 'styled-components'
 import CategoriesPage from './components/Views/CategoriesPage'
 import PostPage from './components/Views/PostPage'
@@ -12,11 +12,9 @@ import axios from 'axios'
 import PrivacyPage from './components/Views/PrivacyPage'
 import ContactPage from './components/Views/ContactPage'
 import TermsAndConditions from './components/Views/TermsAndContionsPage'
-
-
+import Page404 from './components/Views/404'
 
 const App = () => {
-
 
   return (
     <>
@@ -32,6 +30,7 @@ const App = () => {
           <Route path = '/author/:slug' element = {<AuthorPage/>}/>
           <Route path='/category/:slug' element = {<CategoriesPage/>}/>
           <Route path = "/:slug" element = {<PostPage/>}/>
+          <Route path = 'error' element = {<Page404/>} />
         </Routes>
       </Main>
       <Footer/>

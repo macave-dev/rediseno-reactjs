@@ -6,6 +6,7 @@ import axios from 'axios'
 import { Helmet } from 'react-helmet'
 import SharePostBar from '../SharePostBar'
 import he from 'he'
+import RelatedPosts from '../RelatedPosts'
 
 
 const PostPage = () => {
@@ -82,6 +83,7 @@ const PostPage = () => {
         
         {!post || !schema ? '':
             <>
+              <Helmet>
                  <script type="application/ld+json">{
                     `{
                         "@context":"https://schema.org",
@@ -117,7 +119,7 @@ const PostPage = () => {
                     }`
                     }
                 </script>
-                
+              </Helmet>
             </>
            
         }
@@ -141,23 +143,35 @@ const PostPage = () => {
                   <div dangerouslySetInnerHTML={{__html: post.content.rendered}}/>
                 </ContentInfo>
                   <InterestedPosts/>
-                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                  
-                  
+                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
               </LeftSide>
 
               <RightSide>
                 <Advertisement>
-                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
+                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
                 </Advertisement>
                 <Advertisement>
-                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
-                  <img alt = '' src="https://via.placeholder.com/330X282.png?text=Publicidad"/>
+                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
+                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
                 </Advertisement>
               </RightSide>
             </Content>
-        
+
+            <RelatedPosts/>
+
+            <Content>
+              <LeftSide>
+                {/* {post.tags && <RelatedTopics tags = {post.tags}/> }
+                <Author props = {state.source.author[post.author]}/> */}
+              </LeftSide>
+              <RightSide>
+                <Advertisement>
+                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
+                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
+                </Advertisement>
+              </RightSide>
+            </Content>
         </Container>
       }
     </div>

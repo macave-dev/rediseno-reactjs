@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
+import LeftArrowIcon from '../svg/leftArrowIcon';
+import RightArrowIcon from '../svg/rightArrowIcon';
 import Slider from 'react-slick';
-import LeftArrowIcon from "../svg/leftArrowIcon"
-import RightArrowIcon from "../svg/rightArrowIcon"
 import uniqueId from 'lodash/uniqueId';
-import { Link } from 'react-router-dom'
+import GoToIcon from '../svg/goToIcon';
 import axios from 'axios';
 import he from 'he'
+import styled from 'styled-components';
 
 function PrevArrow(props) {
     const { className, style, onClick } = props;
@@ -17,28 +17,16 @@ function PrevArrow(props) {
         </div>
     );
 }
-  
+
 function NextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-      <div className={className} onClick={onClick}>
-          <RightArrowIcon></RightArrowIcon>
-      </div>
-  );
+    const { className, style, onClick } = props;
+    return (
+        <div className={className} onClick={onClick}>
+            <RightArrowIcon></RightArrowIcon>
+        </div>
+    );
 }
-
-
-const InterestedPosts = () => {
-
-    const slug = (window.location.pathname).slice(1)
-    const [post, setPost] = useState([])
-
-    useEffect(() => {
-        axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
-            (response) => {
-                setPost(response.data[0]['jetpack-related-posts'])
-            })
-    })
+const RelatedPosts = () => {
 
 
     const settings = {
@@ -78,38 +66,73 @@ const InterestedPosts = () => {
               }
             }
           ]
-        };
+    };
     
-  return (
-    <InterestedSlider>
-        <h3> Te puede interesar</h3>
 
-        <InterestedSliderContent>
-                <Slider {...settings}>
-                {post.map((element) => {
-                        let shortDescription = `${(element.excerpt.substr(0, 55)).trim()}...`
+    const [posts,setPosts] = useState(null);
+
+    useEffect(() => {
+        axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts`).then(
+            res => {
+                setPosts(res.data.slice(-5));
+            }
+        )
+    })
+
+    function SliderElement(props) {
+        let data = [props.props[0]],
+            localSettings = data.length > 2 ? settings : [{arrows:false}],
+            localClass = data.length > 2 ? '' : 'no-slider';
+
+        return(
+            <Slider {...localSettings} className={localClass}>
+                {data.map((post,id) => {
+                    const formattedDate = dayjs(post.date).format("DD MMMM YYYY");
+                    return(
+                        <div key = {id}>
+                            <CardContent className='card-content'>
+                                <div className='card__background--wrap'>
+                                    <div className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></div>
+                                </div>
+                                <CardContentInfo>
+                                    <a href = {post.link}>
+                                        <h2>{he.decode(post.title.rendered)}</h2>
+                                    </a>
+                                    <ul>
+                                        <li>{formattedDate}</li>
+                                        <li>
+                                            <a href = {post.link}>
+                                                <i><GoToIcon></GoToIcon></i>
+                                                <span>Ver más</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </CardContentInfo>
+                            </CardContent>
+                        </div>
                         
-                        return (
-                            <a key  = {element.id} href = {element.url}>
-                                <CardContent>
-                                    <div className='card__background--wrap'>
-                                        <div className='card__background' style={{backgroundImage: `url(${element.img.src})`}}></div>
-                                    </div>
-                                    <p>{he.decode(element.title)}</p> 
-                                </CardContent>
-                            </a>
-                        )
-                    })}
-                </Slider>
-            </InterestedSliderContent>
-    </InterestedSlider>
+                    )
+                })}
+            </Slider>
+        )
+    }
+
+
+  return (
+    <RelatedNotesContainer>
+            <h3>NOTAS RELACIONADAS</h3>
+            <RelatedNotesSliderContent>
+                {!posts ?  null :
+                   <SliderElement props={posts} ></SliderElement> }
+            </RelatedNotesSliderContent>
+        </RelatedNotesContainer>
   )
 }
 
-export default InterestedPosts
+export default RelatedPosts
 
-const InterestedSlider = styled.div`
-    margin: 60px 0 80px;
+
+const RelatedNotesContainer = styled.div`
     h3{
         margin-top: 0;
         font-size: 17px;
@@ -117,16 +140,14 @@ const InterestedSlider = styled.div`
         font-weight: 500;
         text-transform: uppercase;
     }
-    @media (min-width: 768px) and (max-width: 900px) {
-        width: 90%;
-        margin: 60px auto 80px;
-    }
-    a{
-        text-decoration: none;
+    .slick-slider.no-slider{
+        .card-content{
+            padding: 0;
+        }
     }
 `
-const InterestedSliderContent = styled.div`
-    padding: 0 15px 0 0;
+const RelatedNotesSliderContent = styled.div`
+    margin: 36px 0 57px;
     .slick-slider {
         position: relative;
         display: block;
@@ -236,29 +257,23 @@ const InterestedSliderContent = styled.div`
     }
     @media (min-width: 768px) and (max-width: 900px){
         .slick-slider{
-            width: 96%;
+            width: 97%;
         }
         .slick-arrow{
             &.slick-next{
-                right: -35px;
+                right: -44px;
             }
         }
     }
 `
-
 const CardContent = styled.div`
     position: relative;
-    height: 68px;
-    width: 220px;
-    padding: 0 10px;
-    display: grid;
-    grid-template-columns: 72px auto;
-    grid-gap: 16px ;
-    align-items: center;
+    width: 245px;
+    padding: 0 20px;
     .card__background--wrap{
         position: relative;
         width: 100%;
-        height: 100%;
+        height: 167px;
         overflow: hidden;
         border-radius: 10px;
     }
@@ -271,23 +286,45 @@ const CardContent = styled.div`
         background-position: center;
         background-size: cover;
     }
-    p{
-        font-size: 13px;
-        font-weight: 400;
-        line-height: 15px;
-        max-height: 60px;
-        margin: 0;
-        color: #4C4A58;
+`
+const CardContentInfo = styled.div`
+    margin: 14px auto;
+    width: calc( 100% - 28px );
+    a{
+        text-decoration: none;
     }
-    &:hover{
-        .card__background{
-            transform: scale(1.2);
+    h2{
+        font-size: 15px;
+        color: #000000;
+        font-weight: 500;
+        margin-bottom: 15px;
+        height: 54px;
+    }
+    ul{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        padding: 0;
+        list-style: none;
+        li{
+            font-size: 13px;
+            font-weight: 400;
+            a{
+                display: grid;
+                grid-template-columns: 12px auto;
+                grid-gap: 8px;
+                align-items: center;
+                color: #000000;
+                i{
+                    width: 12px;
+                    height: 12px;
+                    svg{
+                        width: 100%;
+                    }
+                }
+            }
+            &:last-of-type{
+                justify-self: end;
+            }
         }
-    }
-    @media (min-width: 768px) and (max-width: 900px) {
-        width: 220px;
-    }
-    @media (max-width: 767px) {
-        width: 250px;
     }
 `

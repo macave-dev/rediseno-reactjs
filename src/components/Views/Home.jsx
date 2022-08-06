@@ -1,18 +1,18 @@
 import React, {Suspense,lazy, useState, useEffect} from 'react'
-import YoutubeVideo from './YoutubeVideo'
+import YoutubeVideo from '../HomeSections/YoutubeVideo'
 import {Helmet} from "react-helmet";
 import Axios from 'axios'
 
-const Section1 = lazy(() => import('./Section1'))
-const Section2 = lazy(() => import('./Section2'))
+const Section1 = lazy(() => import('../HomeSections/Section1'))
+const Section2 = lazy(() => import('../HomeSections/Section2'))
 // const Section3 = lazy(() => import('./Section3'))
-const Section4 = lazy(() => import('./Section4'))
-const Section5 = lazy(() => import('./Section5'))
-const Section6 = lazy(() => import('./Section6'))
-const Section7 = lazy(() => import('./Section7'))
-const Section8 = lazy(() => import('./Section8')) 
-const Section9 = lazy(() => import('./Section9')) 
-const Section10 = lazy(() => import('./Section10'))
+const Section4 = lazy(() => import('../HomeSections/Section4'))
+const Section5 = lazy(() => import('../HomeSections/Section5'))
+const Section6 = lazy(() => import('../HomeSections/Section6'))
+const Section7 = lazy(() => import('../HomeSections/Section7'))
+const Section8 = lazy(() => import('../HomeSections/Section8')) 
+const Section9 = lazy(() => import('../HomeSections/Section9')) 
+const Section10 = lazy(() => import('../HomeSections/Section10'))
 
 
 const Home = () => {
@@ -33,22 +33,23 @@ const Home = () => {
       {!schema ? null : 
         <>
           {/* DEFINE SCHEMA */}
-          <script type="application/ld+json">
-            {
-              `{
-                "@context": "http://schema.org/",
-                "@type": "NewsMediaOrganization",
-                "name" : "${schema.Name}",
-                "url" : "${schema.URL}",
-                "logo": "${schema.Logo}",
-                "description" : "${schema.Description}",
-                "actionableFeedbackPolicy": "${schema.Policy}",
-                "foundingDate": "",
-                "sameAs": ""
-              }`
-            }
-          </script>
-          
+          <Helmet>
+            <script type="application/ld+json">
+              {
+                `{
+                  "@context": "http://schema.org/",
+                  "@type": "NewsMediaOrganization",
+                  "name" : "${schema.Name}",
+                  "url" : "${schema.URL}",
+                  "logo": "${schema.Logo}",
+                  "description" : "${schema.Description}",
+                  "actionableFeedbackPolicy": "${schema.Policy}",
+                  "foundingDate": "",
+                  "sameAs": ""
+                }`
+              }
+            </script>
+          </Helmet>
         </>
       }
             
