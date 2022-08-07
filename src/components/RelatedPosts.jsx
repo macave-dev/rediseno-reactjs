@@ -81,8 +81,6 @@ const RelatedPosts = (categoryID) => {
     })
 
 
-
-
     function SliderElement(props) {
 
         let data = [props.props[0]],

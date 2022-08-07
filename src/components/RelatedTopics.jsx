@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 
 
-const RelatedTopics = () => {
+const RelatedTopics = (tags) => {
 
     const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
 
@@ -27,7 +27,6 @@ const RelatedTopics = () => {
             console.log(error)
           })
       })
-
 
 
   return (

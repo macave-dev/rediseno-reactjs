@@ -29,15 +29,15 @@ const PostPage = () => {
 
   
   useEffect(() => {
-    setWindowState( false )
-    
     axios.get(apiPost).then(
       (resPost) => {
         setPost(resPost.data[0])
       }).catch(error => {
         console.log(error)
       })
-  })
+
+      setWindowState( false )
+  },[])
 
   useEffect(() => {
     axios.get(apiCategory).then(
@@ -128,10 +128,12 @@ const PostPage = () => {
            
         }
 
-      <SharePostBar props = {windowState} />
+      
 
 
       {!post || !categories || !authors  ? null :  
+      <React.Fragment>
+        <SharePostBar props = {windowState}/>
         <Container data-id="post-container" >
           <Title >{he.decode(post.title.rendered)}</Title>
 
@@ -187,7 +189,7 @@ const PostPage = () => {
 
             <Content>
               <LeftSide>
-                <RelatedTopics/> 
+                <RelatedTopics tags = {post.tags}/> 
                 
                 <AuthorSection/>
               </LeftSide>
@@ -199,6 +201,9 @@ const PostPage = () => {
               </RightSide>
             </Content>
         </Container>
+
+
+      </React.Fragment>
       }
     </div>
   )

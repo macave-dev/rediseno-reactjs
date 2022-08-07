@@ -15,8 +15,7 @@ const SharePostBar = ({props}) => {
 
   const slug = (window.location.pathname).slice(1)
   const [post,setPost] = useState('')
-  const ref = useRef();
-
+  
     useEffect(() => {
         axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
             (response) => {
@@ -24,8 +23,10 @@ const SharePostBar = ({props}) => {
         })
     })
 
+    const ref = useRef();
+
     useEffect(() => {
-        if ( props ) {
+        if ( !props ) {
             if ( ref.current ) {
                 calculateShareBannerPosition();
                 window.addEventListener("resize", calculateShareBannerPosition);
@@ -33,6 +34,7 @@ const SharePostBar = ({props}) => {
             }
         }
     })
+
 
     const calculateShareBannerPosition = (e) => {
         if ( window.innerWidth >= 1024 ) {
@@ -42,8 +44,9 @@ const SharePostBar = ({props}) => {
         }
         ref.current.removeAttribute('style');
     }
+
   return (
-    <ShareBar  ref={ref}>
+    <ShareBar ref={ref}>
         {!post ?  null : 
              <ul>
                 <li>
@@ -98,7 +101,6 @@ const SharePostBar = ({props}) => {
 }
 
 export default SharePostBar
-
 
 const ShareBar = styled.div`
     ul{
