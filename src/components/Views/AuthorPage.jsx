@@ -10,7 +10,7 @@ const AuthorPage = () => {
   const [author, setAuthor] = useState([])
   const [posts, setPosts] = useState([])
 
-  const slug = (window.location.pathname).split('/author/')[1]
+  const slug = (window.location.pathname).split('/author/')[1].slice(0,-1)
 
 
   axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users?slug=${slug}`).then(
@@ -18,6 +18,7 @@ const AuthorPage = () => {
         setAuthor(response.data[0])
     }
   )
+  
 
   const author_id = author.id
   
@@ -26,8 +27,6 @@ const AuthorPage = () => {
         setPosts(response.data)
     }
   )
-
-
 
   return (
     <>
@@ -69,10 +68,7 @@ const AuthorPage = () => {
 
       </div>
     </Items>
-    
-    
     </>
-    
   )
 }
 

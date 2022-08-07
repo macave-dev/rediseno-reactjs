@@ -8,6 +8,7 @@ import SharePostBar from '../SharePostBar'
 import he from 'he'
 import RelatedPosts from '../RelatedPosts'
 import AuthorSection from '../AuthorSection'
+import RelatedTopics from '../RelatedTopics'
 
 
 const PostPage = () => {
@@ -91,9 +92,7 @@ const PostPage = () => {
               <Helmet>
                  <script type="application/ld+json">{
                     `{
-                        "@context":"https://schema.org",
-                        "@type":"NewsArticle",
-                        "mainEntityOfPage":{
+                      tags = {post.tags}/"mainEntityOfPage":{
                             "@type":"WebPage",
                             "@id":"${post.link}" 
                         },
@@ -188,8 +187,8 @@ const PostPage = () => {
 
             <Content>
               <LeftSide>
-                {/* {post.tags && <RelatedTopics tags = {post.tags}/> }
-                <Author props = {state.source.author[post.author]}/> */}
+                <RelatedTopics/> 
+                
                 <AuthorSection/>
               </LeftSide>
               <RightSide>

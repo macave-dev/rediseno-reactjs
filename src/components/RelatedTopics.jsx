@@ -1,39 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import axios from 'axios'
+
 
 const RelatedTopics = () => {
 
+    const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
 
-    const slug = window.location.pathname
-    const slug_f = slug.slice(1)
-
-    const urlTAGS = 'https://eventosyfestivales.com/wp-json/wp/v2/tags/'
-    const urlPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug_f}`
-
-
-    const [tags, setTags] = useState([])
-    const [dataPost, setDataPost] = useState(null)
-
-
-
-    const fetchAPI = async() => {
-
-        const responsePost = await fetch(urlPost)
-        const responsePostJSON = await responsePost.json()
-        setDataPost(responsePostJSON[0].tags)
-
-        const responseTAGS = await fetch(urlTAGS)
-        const responseTAGSJSON = await responseTAGS.json()
-        setTags(responseTAGSJSON)
-    }
+    const [allTags, setAllTags] = useState([])
+    const [post,setPost] = useState(null)
+    
 
     useEffect(() => {
-        fetchAPI()
-    },[])
+        axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/tags`).then(
+            (response) => {
+                setAllTags(response.data)
+            }).catch(error => {console.log(error)});
+    })
+    
+    
+    useEffect(() => {        
+        axios.get(apiPost).then(
+          (resPost) => {
+            setPost(resPost.data[0])
+          }).catch(error => {
+            console.log(error)
+          })
+      })
 
-    console.log(dataPost[0])
-    console.log(tags)
 
 
   return (
@@ -41,15 +35,16 @@ const RelatedTopics = () => {
         <h3>TEMAS RELACIONADOS</h3>
 
         <RelatedTopicsContent>
-            {!dataPost ? null : (
-                dataPost.map((tagId => {
-                    return(
-                        <div key = {tagId}>
-                            <Link to = '/'>Hello</Link>
-                        </div>
-                    )
-                }))
-            )}
+            {!allTags || !post ? null : 
+                allTags.map((tag) => {
+                    console.log(tag.id)
+                    
+                    if (tag.id === post.tags[0] || tag.id === post.tags[1] ) {
+                        return(
+                            <div key = {tag.id}>
+                                <a href={tag.link}>{tag.name}</a>
+                            </div>
+                        )}})}
         </RelatedTopicsContent>
     </RelatedTopicContainer>
   )
