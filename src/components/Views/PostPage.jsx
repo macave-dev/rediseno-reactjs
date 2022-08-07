@@ -183,7 +183,7 @@ const PostPage = () => {
               </RightSide>
             </Content>
 
-            <RelatedPosts/>
+            <RelatedPosts categoryID = {post.categories[0]}/>
 
             <Content>
               <LeftSide>

@@ -39,7 +39,7 @@ const AuthorSection = () => {
                             <h2>SOBRE EL AUTOR</h2>
                             <AuthorImage>
                                 <a href = {author.link}>
-                                    <img src = {urlImage[2]} />
+                                    <img alt = {author.name} src = {urlImage[2]} />
                                 </a>
                             </AuthorImage>
                                 <h3>{author.name}</h3>

@@ -26,7 +26,7 @@ function NextArrow(props) {
         </div>
     );
 }
-const RelatedPosts = () => {
+const RelatedPosts = (categoryID) => {
 
 
     const settings = {
@@ -70,16 +70,21 @@ const RelatedPosts = () => {
     
 
     const [posts,setPosts] = useState(null);
+    const [categories,setCategories] = useState(null);
 
     useEffect(() => {
-        axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts`).then(
+        axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?categories=${categoryID.categoryID}`).then(
             res => {
                 setPosts(res.data.slice(-5));
             }
         )
     })
 
+
+
+
     function SliderElement(props) {
+
         let data = [props.props[0]],
             localSettings = data.length > 2 ? settings : [{arrows:false}],
             localClass = data.length > 2 ? '' : 'no-slider';

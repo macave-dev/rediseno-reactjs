@@ -37,8 +37,7 @@ const RelatedTopics = () => {
         <RelatedTopicsContent>
             {!allTags || !post ? null : 
                 allTags.map((tag) => {
-                    console.log(tag.id)
-                    
+                
                     if (tag.id === post.tags[0] || tag.id === post.tags[1] ) {
                         return(
                             <div key = {tag.id}>
