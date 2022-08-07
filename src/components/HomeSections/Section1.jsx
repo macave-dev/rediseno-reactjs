@@ -15,7 +15,7 @@ const Section1 = ({props}) => {
   useEffect(() =>{
     fetchApiHome()
   },[])
-
+  
   const [hasDataLoaded,setSelectedCard] = useState();
   const [isActiveCard, setActiveCard] = useState();
   const ref = useRef();

@@ -7,55 +7,60 @@ import { Helmet } from 'react-helmet'
 import SharePostBar from '../SharePostBar'
 import he from 'he'
 import RelatedPosts from '../RelatedPosts'
+import AuthorSection from '../AuthorSection'
 
 
 const PostPage = () => {
 
   const current_url = `https://eventosyfestivales.com${window.location.pathname}`
+  const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
+  const apiCategory = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
+  const apiAuthor =  `https://eventosyfestivales.com/wp-json/wp/v2/users/`
 
   const [post,setPost] = useState(null)
-  const [categories, setCategories] = useState({})
-  const [author, setAuthor] = useState(null)
-  const [schema,setSchema] = useState(null)
-
-  const slug = (window.location.pathname).slice(1)
-
+  const [categories,setCategories] = useState([])
+  const [authors,setAuthors]  = useState([])
+  const [schema,setSchema] = useState({})
   const [windowState, setWindowState] = useState()
+
+
   const ref = useRef();
 
+  
   useEffect(() => {
     setWindowState( false )
     
-    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${slug}`).then(
-      (response) => {
-        setPost(response.data[0])
+    axios.get(apiPost).then(
+      (resPost) => {
+        setPost(resPost.data[0])
+      }).catch(error => {
+        console.log(error)
       })
-
-    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/categories/`).then(
-      (response) => {
-        setCategories(response.data)
-      })
-
-    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
-      (response) => {
-        setAuthor(response.data)
-      })
-
-
-    axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
-      (response) => {
-        setSchema(response.data)
-      })
-  
   })
 
+  useEffect(() => {
+    axios.get(apiCategory).then(
+      (resCategory) => {
+        setCategories(resCategory.data)
+      }).catch(error => {
+        console.log(error)
+      })
+  })
 
+  useEffect(() => {
+    axios.get(apiAuthor).then(
+      (resAuthor) => {
+        setAuthors(resAuthor.data)
+      }).catch(error => console.log(error))
+  })
+  
   useEffect(() => {
     if ( ref.current ) {
       setWindowState( true )
     }
   })
 
+  
   
 
   return (
@@ -127,12 +132,33 @@ const PostPage = () => {
       <SharePostBar props = {windowState} />
 
 
-      {!post ? null :  
+      {!post || !categories || !authors  ? null :  
         <Container data-id="post-container" >
           <Title >{he.decode(post.title.rendered)}</Title>
 
           <DateWrapper>
-            <strong>{dayjs(post.date).format("DD MMMM YYYY")} - </strong>
+            {categories.map((item) => {
+              
+              if(item.id === post.categories[0]){
+
+                return (
+                  <React.Fragment>
+                    <strong>{dayjs(post.date).format("DD MMMM YYYY")} - {item.name}</strong>
+                    {authors.map((author) => {
+                      if(author.id === post.author){
+                        return(
+                          <React.Fragment>
+                            <strong>Autor: {author.name} </strong><br/>
+                          </React.Fragment>
+                        )
+                      }
+                    })}
+                  </React.Fragment>
+                )
+              }
+             
+            })}
+            
           </DateWrapper>
 
 
@@ -164,6 +190,7 @@ const PostPage = () => {
               <LeftSide>
                 {/* {post.tags && <RelatedTopics tags = {post.tags}/> }
                 <Author props = {state.source.author[post.author]}/> */}
+                <AuthorSection/>
               </LeftSide>
               <RightSide>
                 <Advertisement>
