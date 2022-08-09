@@ -11,10 +11,12 @@ import AuthorSection from '../../AuthorSection'
 import RelatedTopics from '../../RelatedTopics'
 
 
-const PostPage = () => {
+
+const PostPage = (props) => {
+
 
   const current_url = `https://eventosyfestivales.com${window.location.pathname}`
-  const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
+ 
   const apiCategory = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
   const apiAuthor =  `https://eventosyfestivales.com/wp-json/wp/v2/users/`
 
@@ -24,13 +26,12 @@ const PostPage = () => {
   const [schema,setSchema] = useState({})
   const [windowState, setWindowState] = useState()
 
-  
 
   const ref = useRef();
 
   
   useEffect(() => {
-    axios.get(apiPost).then(
+    axios.get(props.props).then(
       (resPost) => {
         setPost(resPost.data[0])
       }).catch(error => {

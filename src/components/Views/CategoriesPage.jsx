@@ -23,6 +23,13 @@ const CategoriesPage = () => {
         setPosts(response.data)
     }
   )
+
+  const [authors,setAuthors]  = useState([])
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
+    (res) => {
+        setAuthors(res.data)
+    }
+  )
   
   return (
     <>
@@ -55,7 +62,13 @@ const CategoriesPage = () => {
                   <span>
                     <h3>{he.decode(post.title.rendered)}</h3>
                       <ul>
-                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
+                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>- {!authors ? <h1>Hello</h1> : 
+                          authors.map((author) => {
+                            return(
+                              <React.Fragment>{author.name}</React.Fragment>
+                            )
+                          })
+                        }</span></li>
                         
                       </ul>
                   </span>
