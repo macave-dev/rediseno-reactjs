@@ -1,14 +1,14 @@
 import React, {useState,useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
-import InterestedPosts from '../InterestedPosts'
+import InterestedPosts from '../../InterestedPosts'
 import axios from 'axios'
 import { Helmet } from 'react-helmet'
-import SharePostBar from '../SharePostBar'
+import SharePostBar from '../../SharePostBar'
 import he from 'he'
-import RelatedPosts from '../RelatedPosts'
-import AuthorSection from '../AuthorSection'
-import RelatedTopics from '../RelatedTopics'
+import RelatedPosts from '../../RelatedPosts'
+import AuthorSection from '../../AuthorSection'
+import RelatedTopics from '../../RelatedTopics'
 
 
 const PostPage = () => {
@@ -24,6 +24,7 @@ const PostPage = () => {
   const [schema,setSchema] = useState({})
   const [windowState, setWindowState] = useState()
 
+  
 
   const ref = useRef();
 
@@ -61,9 +62,28 @@ const PostPage = () => {
     }
   })
 
+  //INFINITE SCROLL
+  const [morePosts,setMorePosts] = useState([])
   
-  
+  const loadMorePosts = () => {
+    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts`).then(({data}) => {
+      const newPost = [];
+      data.forEach((p) => newPost.push(p))
+      setMorePosts(newPost)
+    })
+  }
+  const handleScroll = (e) => {
 
+    if(window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight){
+      console.log("at the bottom of the page")
+    }
+  }
+
+  useEffect(() => {
+    loadMorePosts();
+    window.addEventListener('scroll', handleScroll);
+  },[]);
+  
   return (
     <div>  
         {!post || !schema ?  null :
@@ -78,7 +98,7 @@ const PostPage = () => {
             <meta data-rh="true" name="robots" content="max-image-preview:large"/>
             <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
             <meta data-rh="true" property="fb:app_id" content={schema.FacebookId}/>
-            <meta data-rh="true" property="og:type" content="article"/>
+            <meta data-r ="true" property="og:type" content="article"/>
             <meta data-rh="true" property="og:title" content={post.title.rendered}/>
             <meta data-rh="true" property="og:site_name" content={schema.Name}/>
             <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  
@@ -86,7 +106,7 @@ const PostPage = () => {
             <title>{he.decode(post.title.rendered)}</title>
           </Helmet>
         }
-        
+         
         {!post || !schema ? '':
             <>
               <Helmet>
