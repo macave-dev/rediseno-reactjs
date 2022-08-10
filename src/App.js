@@ -14,6 +14,7 @@ import ContactPage from './components/Views/ContactPage'
 import TermsAndConditions from './components/Views/TermsAndContionsPage'
 import Page404 from './components/Views/404'
 import PostsScrollInfinite from './components/Views/PostView/PostsScrollInfinite'
+import SearchView from './components/Views/SearchView'
 
 const App = () => {
 
@@ -32,6 +33,7 @@ const App = () => {
           <Route path='/category/:slug' element = {<CategoriesPage/>}/>
           <Route path = "/:slug" element = {<PostsScrollInfinite/>}/>
           <Route path = 'error' element = {<Page404/>} />
+          <Route path = 'search/:slug' element = {<SearchView/>}/>
         </Routes>
       </Main>
       <Footer/>

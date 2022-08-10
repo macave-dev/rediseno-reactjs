@@ -1,6 +1,9 @@
 import React, { useState, useRef,useEffect } from 'react';
 import SearchIcon from '../../svg/searchIcon'
 import styled from 'styled-components';
+import axios from 'axios'
+
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
     const [isOpen, openWrapper] = useState(false);
@@ -16,12 +19,21 @@ const Search = () => {
 
 
     const [enteredValue, setEnteredValue] = useState('');
+    const [foundPosts,setFoundPosts] = useState([]);
+    const navigate = useNavigate();
+
     const handleSubmit = () => {
+
+        navigate(`/search/${enteredValue}`);
+        window.location.reload()
+
         window.scrollTo(0, 0);
         openWrapper(false)
         setEnteredValue('')
       };
     
+
+
       useEffect(() => {
         const keyDownHandler = event => {
           if (event.key === 'Enter') {
@@ -36,7 +48,10 @@ const Search = () => {
           document.removeEventListener('keydown', keyDownHandler);
         };
       }, [enteredValue]);
-    
+      
+
+      console.log()
+
     return (
         <>
         <SearchContentElement >
