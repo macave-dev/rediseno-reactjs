@@ -7,8 +7,7 @@ const PostPage = lazy(() => import('./PostPage'))
 
 const PostsScrollInfinite = () => {
     
-
-    const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
+    const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1).split('nota')[1]}`
 
 
     const [posts, setPosts] = useState([])
