@@ -31,8 +31,8 @@ const App = () => {
           <Route path='/tag/:slug' element = {<TagsPage/>}/>
           <Route path = '/author/:slug' element = {<AuthorPage/>}/>
           <Route path='/category/:slug' element = {<CategoriesPage/>}/>
-          <Route path = "nota/:slug" element = {<PostsScrollInfinite/>}/>
-          <Route path = '*' element = {<Page404/>} />
+          <Route path = "/:slug" element = {<PostsScrollInfinite/>}/>
+          <Route path = 'error' element = {<Page404/>} />
           <Route path = 'search/:slug' element = {<SearchView/>}/>
         </Routes>
       </Main>

@@ -28,6 +28,7 @@ const AuthorPage = () => {
     }
   )
 
+
   return (
     <>
     <Helmet>
@@ -44,7 +45,7 @@ const AuthorPage = () => {
         </div>
       {/* CONTENT */}
       <div>
-        {!posts ? null : 
+        {!posts || !author ? null : 
           posts.map((post) => {
             return(
               <Container key = {post.id}>
@@ -56,7 +57,11 @@ const AuthorPage = () => {
                   <span>
                     <h3>{he.decode(post.title.rendered)}</h3>
                       <ul>
-                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
+                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} 
+                          <span>
+                            - {author.name}
+                          </span>
+                        </li>
                         
                       </ul>
                   </span>

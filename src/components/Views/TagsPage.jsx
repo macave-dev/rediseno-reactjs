@@ -25,6 +25,22 @@ const TagsPage = () => {
     }
   )
 
+  const [authors,setAuthors]  = useState([])
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
+    (res) => {
+        setAuthors(res.data)
+    }
+  )
+
+  const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
   
 
   return (
@@ -59,8 +75,7 @@ const TagsPage = () => {
                   <span>
                     <h3>{he.decode(post.title.rendered)}</h3>
                       <ul>
-                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>-</span></li>
-                        
+                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span> - {convertArrayToObject(authors,'id')[post.author].name} </span></li>
                       </ul>
                   </span>
                 </a>
@@ -68,7 +83,6 @@ const TagsPage = () => {
             )
           })
         }
-
       </div>
     </Items>
     

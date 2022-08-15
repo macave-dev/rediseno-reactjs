@@ -3,13 +3,11 @@ import styled from 'styled-components'
 import axios from 'axios'
 
 
-const RelatedTopics = (tags) => {
+const RelatedTopics = ({tags}) => {
 
-    const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
 
-    const [allTags, setAllTags] = useState([])
-    const [post,setPost] = useState(null)
-    
+    const [allTags, setAllTags] = useState(null)
+
 
     useEffect(() => {
         axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/tags`).then(
@@ -18,31 +16,49 @@ const RelatedTopics = (tags) => {
             }).catch(error => {console.log(error)});
     })
     
+    const convertArrayToObject = (array, key) => {
+        const initialValue = {};
+        return array.reduce((obj, item) => {
+          return {
+            ...obj,
+            [item[key]]: item,
+          };
+        }, initialValue);
+      };
     
-    useEffect(() => {        
-        axios.get(apiPost).then(
-          (resPost) => {
-            setPost(resPost.data[0])
-          }).catch(error => {
-            console.log(error)
-          })
-      })
-
+      
+    const count = [0]
 
   return (
     <RelatedTopicContainer>
         <h3>TEMAS RELACIONADOS</h3>
 
         <RelatedTopicsContent>
-            {!allTags || !post ? null : 
-                allTags.map((tag) => {
-                
-                    if (tag.id === post.tags[0] || tag.id === post.tags[1] ) {
+            
+            {!tags || !allTags ? null : (
+                <>
+                    {count.map((c) => {
+                        const tag1 = convertArrayToObject(allTags,'id')[1378]
+                        const tag2 = convertArrayToObject(allTags,'id')[2717]
+                        const tag3 = convertArrayToObject(allTags,'id')[2714]
+
                         return(
-                            <div key = {tag.id}>
-                                <a href={tag.link}>{tag.name}</a>
-                            </div>
-                        )}})}
+                            <React.Fragment key = {c}>
+                                <div>
+                                    <a href = {tag1.link}>{tag1.name}</a>
+                                </div>
+                                <div>
+                                    <a href = {tag2.link}>{tag2.name}</a>
+                                </div>
+                                <div>
+                                    <a href = {tag3.link}>{tag3.name}</a>
+                                </div>
+                            </React.Fragment>
+                        )
+                    })}
+                </>
+            )}
+
         </RelatedTopicsContent>
     </RelatedTopicContainer>
   )

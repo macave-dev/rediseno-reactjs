@@ -17,16 +17,14 @@ const PostPage = (props) => {
 
   const current_url = `https://eventosyfestivales.com${window.location.pathname}`
  
-  const apiCategory = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
-  const apiAuthor =  `https://eventosyfestivales.com/wp-json/wp/v2/users/`
+  const apiCategories = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
+  const apiAuthors =  `https://eventosyfestivales.com/wp-json/wp/v2/users/`
 
   const [post,setPost] = useState(null)
   const [categories,setCategories] = useState([])
-  const [authors,setAuthors]  = useState([])
   const [schema,setSchema] = useState({})
   const [windowState, setWindowState] = useState()
-
-
+  
   const ref = useRef();
 
   
@@ -42,7 +40,7 @@ const PostPage = (props) => {
   },[])
 
   useEffect(() => {
-    axios.get(apiCategory).then(
+    axios.get(apiCategories).then(
       (resCategory) => {
         setCategories(resCategory.data)
       }).catch(error => {
@@ -50,12 +48,6 @@ const PostPage = (props) => {
       })
   })
 
-  useEffect(() => {
-    axios.get(apiAuthor).then(
-      (resAuthor) => {
-        setAuthors(resAuthor.data)
-      }).catch(error => console.log(error))
-  })
   
   useEffect(() => {
     if ( ref.current ) {
@@ -63,27 +55,48 @@ const PostPage = (props) => {
     }
   })
 
-  //INFINITE SCROLL
-  const [morePosts,setMorePosts] = useState([])
+  // //INFINITE SCROLL
+  // const [morePosts,setMorePosts] = useState([])
   
-  const loadMorePosts = () => {
-    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts`).then(({data}) => {
-      const newPost = [];
-      data.forEach((p) => newPost.push(p))
-      setMorePosts(newPost)
-    })
-  }
-  const handleScroll = (e) => {
+  // const loadMorePosts = () => {
+  //   axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts`).then(({data}) => {
+  //     const newPost = [];
+  //     data.forEach((p) => newPost.push(p))
+  //     setMorePosts(newPost)
+  //   })
+  // }
 
-    if(window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight){
-      console.log("at the bottom of the page")
+  // const handleScroll = (e) => {
+
+  //   if(window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight){
+  //     console.log("at the bottom of the page")
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   loadMorePosts();
+  //   window.addEventListener('scroll', handleScroll);
+  // },[]);
+
+
+
+  const [authors,setAuthors]  = useState(null)
+  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
+    (res) => {
+        setAuthors(res.data)
     }
-  }
+  )
 
-  useEffect(() => {
-    loadMorePosts();
-    window.addEventListener('scroll', handleScroll);
-  },[]);
+  const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
+
   
   return (
     <div>  
@@ -108,7 +121,8 @@ const PostPage = (props) => {
           </Helmet>
         }
          
-        {!post || !schema ? '':
+        {!post || !authors || !schema ? '':
+        
             <>
               <Helmet>
                  <script type="application/ld+json">{
@@ -128,9 +142,9 @@ const PostPage = (props) => {
                         "dateModified":"${post.date_gmt}", 
                         "author":{
                             "@type":"Person",
-                           
+                            "name":"${convertArrayToObject(authors,'id')[post.author].name}", 
                             "jobTitle": "Journalist",
-                            
+                            "url":"${convertArrayToObject(authors,'id')[post.author].link}"
                         },
                         "publisher":{
                             "@type":"Organization",
@@ -160,6 +174,7 @@ const PostPage = (props) => {
 
           <DateWrapper>
             {categories.map((item) => {
+
               
               if(item.id === post.categories[0]){
 

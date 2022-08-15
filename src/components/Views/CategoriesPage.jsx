@@ -30,6 +30,19 @@ const CategoriesPage = () => {
         setAuthors(res.data)
     }
   )
+
+  const convertArrayToObject = (array, key) => {
+    const initialValue = {};
+    return array.reduce((obj, item) => {
+      return {
+        ...obj,
+        [item[key]]: item,
+      };
+    }, initialValue);
+  };
+
+
+
   
   return (
     <>
@@ -50,8 +63,9 @@ const CategoriesPage = () => {
       </div>
       {/* CONTENT */}
       <div>
-        {!posts ? null : 
+        {!posts || !authors ? null : 
           posts.map((post) => {
+
             return(
               <Container key = {post.id}>
                 <a href = {post.link}>
@@ -62,13 +76,7 @@ const CategoriesPage = () => {
                   <span>
                     <h3>{he.decode(post.title.rendered)}</h3>
                       <ul>
-                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span>- {!authors ? <h1>Hello</h1> : 
-                          authors.map((author) => {
-                            return(
-                              <React.Fragment>{author.name}</React.Fragment>
-                            )
-                          })
-                        }</span></li>
+                        <li>{ dayjs(post.date).format("DD MMMM YYYY")} <span> - {convertArrayToObject(authors,'id')[post.author].name} </span></li>
                         
                       </ul>
                   </span>

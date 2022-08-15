@@ -1,5 +1,4 @@
 import React, {useEffect,useState, Suspense,lazy} from 'react'
-import useInfiniteScroll from 'react-infinite-scroll-hook'
 import axios from 'axios'
 
 const PostPage = lazy(() => import('./PostPage'))
@@ -7,15 +6,15 @@ const PostPage = lazy(() => import('./PostPage'))
 
 const PostsScrollInfinite = () => {
     
-    const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1).split('nota')[1]}`
+    const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
 
+    console.log(`https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`)
 
     const [posts, setPosts] = useState([])
     useEffect(() => {
         axios.get('https://eventosyfestivales.com/wp-json/wp-macave/v1/posts_scroll_amp').then(
         response => {
             setPosts(response.data.pages)
-            
         })
     },[])
     
