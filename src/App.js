@@ -33,7 +33,7 @@ const App = () => {
           <Route path='/category/:slug' element = {<CategoriesPage/>}/>
           <Route path = "/:slug" element = {<PostsScrollInfinite/>}/>
           <Route path = 'error' element = {<Page404/>} />
-          <Route path = 'search/:slug' element = {<SearchView/>}/>
+          <Route path = 's=:search' element = {<SearchView/>}/>
         </Routes>
       </Main>
       <Footer/>

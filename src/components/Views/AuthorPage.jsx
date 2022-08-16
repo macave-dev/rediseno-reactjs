@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import axios from 'axios'
@@ -9,6 +9,7 @@ const AuthorPage = () => {
 
   const [author, setAuthor] = useState([])
   const [posts, setPosts] = useState([])
+  let numberOfPage = 1;
 
   const slug = (window.location.pathname).split('/author/')[1].slice(0,-1)
 
@@ -19,14 +20,31 @@ const AuthorPage = () => {
     }
   )
   
-
   const author_id = author.id
   
-  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?author=${author_id}`).then(
-    (response) => {
-        setPosts(response.data)
+
+  const loadMorePost = () => {
+    axios
+    .get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?author=${author_id}&page=${numberOfPage}`)
+    .then(
+      (({data}) => {
+        const newPost = [];
+        data.forEach( p => newPost.push(p));
+        setPosts(oldPosts => [...oldPosts, ...newPost]);
+      }));
+    numberOfPage += 1;
+  };
+
+  const handleScroll = (e) => {
+    if(window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight){
+      loadMorePost();
     }
-  )
+  }
+
+  useEffect(() => {
+    loadMorePost();
+    window.addEventListener('scroll', handleScroll);
+  },[author_id]);
 
 
   return (

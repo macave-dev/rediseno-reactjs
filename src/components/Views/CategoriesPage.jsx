@@ -4,11 +4,13 @@ import dayjs from 'dayjs'
 import axios from 'axios'
 import he from 'he'
 import {Helmet} from 'react-helmet'
+import { useEffect } from 'react'
 
 const CategoriesPage = () => {
 
   const [category, setCategory] = useState('')
-  const [posts, setPosts] = useState('')
+  const [posts, setPosts] = useState([])
+  let numberOfPage = 1;
 
   const slug = (window.location.pathname).split('/category/')[1]
 
@@ -18,12 +20,19 @@ const CategoriesPage = () => {
     }
   )
   
-  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?categories=${category.id}`).then(
-    (response) => {
-        setPosts(response.data)
-    }
-  )
+  const loadMorePost = () => {
+      axios
+      .get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?categories=${category.id}&page=${numberOfPage}`)
+      .then(
+        (({data}) => {
+          const newPost = [];
+          data.forEach( p => newPost.push(p));
+          setPosts(oldPosts => [...oldPosts, ...newPost]);
+        }));
+      numberOfPage += 1;
+  };
 
+  
   const [authors,setAuthors]  = useState([])
   axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
     (res) => {
@@ -31,6 +40,7 @@ const CategoriesPage = () => {
     }
   )
 
+  //Functionallity
   const convertArrayToObject = (array, key) => {
     const initialValue = {};
     return array.reduce((obj, item) => {
@@ -40,6 +50,17 @@ const CategoriesPage = () => {
       };
     }, initialValue);
   };
+
+  const handleScroll = (e) => {
+    if(window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight){
+      loadMorePost();
+    }
+  }
+
+  useEffect(() => {
+    loadMorePost();
+    window.addEventListener('scroll', handleScroll);
+  },[category.id]);
 
 
 
@@ -64,6 +85,7 @@ const CategoriesPage = () => {
       {/* CONTENT */}
       <div>
         {!posts || !authors ? null : 
+        
           posts.map((post) => {
 
             return(

@@ -24,7 +24,7 @@ const Search = () => {
 
     const handleSubmit = () => {
 
-        navigate(`/search/${enteredValue}`);
+        navigate(`/s=${enteredValue}`);
         window.location.reload()
 
         window.scrollTo(0, 0);

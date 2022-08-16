@@ -7,14 +7,13 @@ import dayjs from 'dayjs'
 const SearchView = () => {
 
     const [foundPosts,setFoundPosts] = useState([])
-    const search = (window.location.pathname).split('/search/')[1]
+    const search = (window.location.pathname).split('/s=')[1]
 
 
     useEffect(() => {
         axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?search=${search}`).then(
             res => {
                 setFoundPosts(res.data)
-                console.log(res.data)
             }
         )
     },[])

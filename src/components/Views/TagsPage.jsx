@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 import axios from 'axios'
@@ -10,6 +10,7 @@ const TagsPage = () => {
 
   const [tag, setTag] = useState([])
   const [posts, setPosts] = useState([])
+  let numberOfPage = 1;
 
   const slug = (window.location.pathname).split('/tag/')[1]
 
@@ -19,11 +20,17 @@ const TagsPage = () => {
     }
   )
   
-  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?tags=${tag.id}`).then(
-    (response) => {
-        setPosts(response.data)
-    }
-  )
+  const loadMorePost = () => {
+    axios
+    .get(`https://eventosyfestivales.com/wp-json/wp/v2/posts?tags=${tag.id}&page=${numberOfPage}`)
+    .then(
+      (({data}) => {
+        const newPost = [];
+        data.forEach( p => newPost.push(p));
+        setPosts(oldPosts => [...oldPosts, ...newPost]);
+      }));
+    numberOfPage += 1;
+  };
 
   const [authors,setAuthors]  = useState([])
   axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
@@ -41,6 +48,17 @@ const TagsPage = () => {
       };
     }, initialValue);
   };
+
+  const handleScroll = (e) => {
+    if(window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight){
+      loadMorePost();
+    }
+  }
+
+  useEffect(() => {
+    loadMorePost();
+    window.addEventListener('scroll', handleScroll);
+  },[tag.id]);
   
 
   return (
