@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -23,29 +22,32 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     --> 
-    <script type="text/javascript">
-      window._taboola = window._taboola || [];
-      _taboola.push({article:'auto'});
-      !function (e, f, u, i) {
-      if (!document.getElementById(i)){
-      e.async = 1;
-      e.src = u;
-      e.id = i;
-      f.parentNode.insertBefore(e, f);
-      }
-      }(document.createElement('script'),
-      document.getElementsByTagName('script')[0],
-      '//cdn.taboola.com/libtrc/macave-network/loader.js',
-      'tb_loader_script');
-      if(window.performance && typeof window.performance.mark == 'function')
-      {window.performance.mark('tbl_ic');}
-      </script>
 
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4364358770076153" crossorigin="anonymous"></script>
+
+    <!-- Taboola -->
+    <script type="text/javascript">
+        window._taboola = window._taboola || [];
+        _taboola.push({article:'auto'});
+        !function (e, f, u, i) {
+          if (!document.getElementById(i)){
+            e.async = 1;
+            e.src = u;
+            e.id = i;
+            f.parentNode.insertBefore(e, f);
+          }
+        }(document.createElement('script'),
+        document.getElementsByTagName('script')[0],
+        '//cdn.taboola.com/libtrc/macave-network/loader.js',
+        'tb_loader_script');
+        if(window.performance && typeof window.performance.mark == 'function')
+        {window.performance.mark('tbl_ic');}
+      </script>
 
       
 
-        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet"></link>
+      
+
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet"/>
         <link data-rh="true" rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" as="font" type="font/woff2" crossorigin="true"/>
         <link data-rh="true" rel="dns-prefetch" href="https://www.google-analytics.com"/>
         <link data-rh="true" href="https://www.google-analytics.com" rel="preconnect" crossorigin="true"/>
@@ -54,11 +56,11 @@
         <link data-rh="true" rel="shortcut icon" href='https://i0.wp.com/eventosyfestivales.com/wp-content/uploads/2022/04/eyf-png.png?fit=512%2C512&ssl=1'/>
         <link data-rh="true" rel="icon" href='https://i0.wp.com/eventosyfestivales.com/wp-content/uploads/2022/04/eyf-png.png?fit=512%2C512&ssl=1' type="image/x-icon"/>
         <!-- ADSENSE -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1507048971343506" crossorigin="anonymous"></script>
-
-        <!-- OPTAD -->
-        <script async src="//cmp.optad360.io/items/efcbca1a-ff07-4c07-8ab7-4b8f22babc58.min.js"></script>
-        <script async src="//get.optad360.io/sf/2a85e80b-6283-412a-9072-fb28e85f51ee/plugin.min.js"></script>
+        
+        <script 
+          async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4364358770076153"
+          crossorigin="anonymous">
+        </script>
 
   </head>
   <body>
@@ -72,5 +74,10 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <script type="text/javascript">
+      window._taboola = window._taboola || [];
+      _taboola.push({flush: true});
+      </script>
   </body>
 </html>

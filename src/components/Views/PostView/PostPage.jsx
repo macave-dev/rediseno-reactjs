@@ -64,6 +64,18 @@ const PostPage = () => {
     }
   })
 
+  // const taboola = <React.Fragment>
+  //   <div id="taboola-below-article-thumbnails"></div>
+  //   <script type="text/javascript">
+  //     window._taboola = window._taboola || [];
+  //     _taboola.push({
+  //     mode: 'alternating-thumbnails-a',
+  //     container: 'taboola-below-article-thumbnails',
+  //     placement: 'Below Article Thumbnails',
+  //     target_type: 'mix'
+  //     });
+  //   </script>
+  // </React.Fragment>
   
   
   return (
@@ -146,12 +158,13 @@ const PostPage = () => {
 
           <Content>
               <LeftSide>
-                  <img src = {post.jetpack_featured_media_url} alt = ''></img>
+                <img src = {post.jetpack_featured_media_url} alt = ''></img>
                 <ContentInfo>
                   <div dangerouslySetInnerHTML={{__html: post.content.rendered}}/>
                 </ContentInfo>
-                  <InterestedPosts/>
-                  <img alt = '' src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2017/12/277023-whatsapp-facebook-anuncios-publicidad.png?itok=F5XWFINh"/>
+                
+                <InterestedPosts/>
+                {}
               </LeftSide>
 
               <RightSide>
