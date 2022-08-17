@@ -2,7 +2,8 @@ import React, {useState,useEffect} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 
-const AuthorSection = () => {
+const AuthorSection = ({props}) => {
+
 
     const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
     const apiAuthor =  `https://eventosyfestivales.com/wp-json/wp/v2/users/`
@@ -14,42 +15,42 @@ const AuthorSection = () => {
         axios.get(apiPost).then(
             (resPost) => {
                 setPost(resPost.data[0])
-        }).catch(error => {
-            console.log(error)
         })
-    })
 
-    useEffect(() => {
         axios.get(apiAuthor).then(
-          (resAuthor) => {
-            setAuthors(resAuthor.data)
-          }).catch(error => console.log(error))
-      })
-    
+            (resAuthor) => {
+              setAuthors(resAuthor.data)
+            })        
+    },[])
+
+    const convertArrayToObject = (array, key) => {
+        const initialValue = {};
+        return array.reduce((obj, item) => {
+          return {
+            ...obj,
+            [item[key]]: item,
+          };
+        }, initialValue);
+      };
+
+    const authorsObject = convertArrayToObject(authors,'id')[props];
 
   return (
-    <React.Fragment>
-        {!post || !authors ? null :
-            authors.map((author) => {
-                if(author.id === post.author){
-                    const urlImage = Object.values(author.avatar_urls)
-                    
-                    return (
-                        <AuthorContainer>
-                            <h2>SOBRE EL AUTOR</h2>
-                            <AuthorImage>
-                                <a href = {author.link}>
-                                    <img alt = {author.name} src = {urlImage[2]} />
-                                </a>
-                            </AuthorImage>
-                                <h3>{author.name}</h3>
-                                <p>{author.yoast_head_json.og_title}</p>
-                        </AuthorContainer>
-                    )
-                }
-            })
-        }
-    </React.Fragment>
+    <AuthorContainer>
+        <h2>SOBRE EL AUTOR</h2>
+        
+        {!authorsObject ? null : (
+            <React.Fragment>
+                <AuthorImage>
+                    <a href = {authorsObject.link}>
+                        <img src = {Object.values(authorsObject.avatar_urls)[2]} ></img>
+                    </a>
+            </AuthorImage>
+                <h3>{authorsObject.name}</h3>
+                <p>{authorsObject.yoast_head_json.og_title}</p>
+            </React.Fragment>
+        )}
+    </AuthorContainer>
   )
 }
 

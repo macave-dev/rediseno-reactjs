@@ -13,7 +13,6 @@ import PrivacyPage from './components/Views/PrivacyPage'
 import ContactPage from './components/Views/ContactPage'
 import TermsAndConditions from './components/Views/TermsAndContionsPage'
 import Page404 from './components/Views/404'
-import PostsScrollInfinite from './components/Views/PostView/PostsScrollInfinite'
 import SearchView from './components/Views/SearchView'
 
 const App = () => {
@@ -31,7 +30,7 @@ const App = () => {
           <Route path='/tag/:slug' element = {<TagsPage/>}/>
           <Route path = '/author/:slug' element = {<AuthorPage/>}/>
           <Route path='/category/:slug' element = {<CategoriesPage/>}/>
-          <Route path = "/:slug" element = {<PostsScrollInfinite/>}/>
+          <Route path = "/:slug" element = {<PostPage/>}/>
           <Route path = 'error' element = {<Page404/>} />
           <Route path = 's=:search' element = {<SearchView/>}/>
         </Routes>

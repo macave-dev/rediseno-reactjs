@@ -12,41 +12,45 @@ import RelatedTopics from '../../RelatedTopics'
 
 
 
-const PostPage = (props) => {
-
+const PostPage = () => {
 
   const current_url = `https://eventosyfestivales.com${window.location.pathname}`
- 
+  const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
   const apiCategories = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
   const apiAuthors =  `https://eventosyfestivales.com/wp-json/wp/v2/users/`
 
   const [post,setPost] = useState(null)
-  const [categories,setCategories] = useState([])
+  const [categories,setCategories] = useState(null)
   const [schema,setSchema] = useState({})
   const [windowState, setWindowState] = useState()
+  const [authors,setAuthors]  = useState(null)
   
   const ref = useRef();
 
+
   
   useEffect(() => {
-    axios.get(props.props).then(
-      (resPost) => {
+    axios.get(apiPost).then(
+      resPost => {
         setPost(resPost.data[0])
-      }).catch(error => {
-        console.log(error)
-      })
+      }
+    )
 
-      setWindowState( false )
-  },[])
-
-  useEffect(() => {
     axios.get(apiCategories).then(
       (resCategory) => {
         setCategories(resCategory.data)
-      }).catch(error => {
-        console.log(error)
       })
-  })
+    
+    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
+      res => {
+        setAuthors(res.data)
+    })
+
+    
+
+    setWindowState( false );
+  },[])
+
 
   
   useEffect(() => {
@@ -55,37 +59,6 @@ const PostPage = (props) => {
     }
   })
 
-  // //INFINITE SCROLL
-  // const [morePosts,setMorePosts] = useState([])
-  
-  // const loadMorePosts = () => {
-  //   axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/posts`).then(({data}) => {
-  //     const newPost = [];
-  //     data.forEach((p) => newPost.push(p))
-  //     setMorePosts(newPost)
-  //   })
-  // }
-
-  // const handleScroll = (e) => {
-
-  //   if(window.innerHeight + e.target.documentElement.scrollTop + 1 >= e.target.documentElement.scrollHeight){
-  //     console.log("at the bottom of the page")
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   loadMorePosts();
-  //   window.addEventListener('scroll', handleScroll);
-  // },[]);
-
-
-
-  const [authors,setAuthors]  = useState(null)
-  axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
-    (res) => {
-        setAuthors(res.data)
-    }
-  )
 
   const convertArrayToObject = (array, key) => {
     const initialValue = {};
@@ -97,6 +70,7 @@ const PostPage = (props) => {
     }, initialValue);
   };
 
+  
   
   return (
     <div>  
@@ -164,8 +138,6 @@ const PostPage = (props) => {
         }
 
       
-
-
       {!post || !categories || !authors  ? null :  
       <React.Fragment>
         <SharePostBar props = {windowState}/>
@@ -173,29 +145,8 @@ const PostPage = (props) => {
           <Title >{he.decode(post.title.rendered)}</Title>
 
           <DateWrapper>
-            {categories.map((item) => {
-
-              
-              if(item.id === post.categories[0]){
-
-                return (
-                  <React.Fragment>
-                    <strong>{dayjs(post.date).format("DD MMMM YYYY")} - {item.name}</strong>
-                    {authors.map((author) => {
-                      if(author.id === post.author){
-                        return(
-                          <React.Fragment>
-                            <strong>Autor: {author.name} </strong><br/>
-                          </React.Fragment>
-                        )
-                      }
-                    })}
-                  </React.Fragment>
-                )
-              }
-             
-            })}
-            
+            <strong>{dayjs(post.date).format("DD MMMM YYYY")} - {convertArrayToObject(categories,'id')[post.categories[0]].name}</strong>
+            <strong>Autor:  {convertArrayToObject(authors,'id')[post.author].name}</strong><br/>
           </DateWrapper>
 
 
@@ -227,7 +178,7 @@ const PostPage = (props) => {
               <LeftSide>
                 <RelatedTopics tags = {post.tags}/> 
                 
-                <AuthorSection/>
+                <AuthorSection props = {post.author}/>
               </LeftSide>
               <RightSide>
                 <Advertisement>
