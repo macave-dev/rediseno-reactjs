@@ -16,49 +16,14 @@ const PostPage = () => {
 
   const current_url = `https://eventosyfestivales.com${window.location.pathname}`
   const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
-  const apiCategories = `https://eventosyfestivales.com/wp-json/wp/v2/categories/`
-  const apiAuthors =  `https://eventosyfestivales.com/wp-json/wp/v2/users/`
 
   const [post,setPost] = useState(null)
-  const [categories,setCategories] = useState(null)
+  const [allCategories,setAllCategories] = useState([])
   const [schema,setSchema] = useState({})
   const [windowState, setWindowState] = useState()
   const [authors,setAuthors]  = useState(null)
   
   const ref = useRef();
-
-
-  
-  useEffect(() => {
-    axios.get(apiPost).then(
-      resPost => {
-        setPost(resPost.data[0])
-      }
-    )
-
-    axios.get(apiCategories).then(
-      (resCategory) => {
-        setCategories(resCategory.data)
-      })
-    
-    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
-      res => {
-        setAuthors(res.data)
-    })
-
-    
-
-    setWindowState( false );
-  },[])
-
-
-  
-  useEffect(() => {
-    if ( ref.current ) {
-      setWindowState( true )
-    }
-  })
-
 
   const convertArrayToObject = (array, key) => {
     const initialValue = {};
@@ -69,6 +34,35 @@ const PostPage = () => {
       };
     }, initialValue);
   };
+  
+  useEffect(() => {
+    axios.get(apiPost).then(
+      resPost => {
+        setPost(resPost.data[0])
+      }
+    )
+
+    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/categories/`).then(
+      (resCategory) => {
+        setAllCategories(convertArrayToObject(resCategory.data,'id'))
+      })
+
+    
+    axios.get(`https://eventosyfestivales.com/wp-json/wp/v2/users/`).then(
+      res => {
+        setAuthors(convertArrayToObject(res.data,'id'))
+    })
+
+    setWindowState( false );
+  },[apiPost])
+
+
+  
+  useEffect(() => {
+    if ( ref.current ) {
+      setWindowState( true )
+    }
+  })
 
   
   
@@ -116,9 +110,9 @@ const PostPage = () => {
                         "dateModified":"${post.date_gmt}", 
                         "author":{
                             "@type":"Person",
-                            "name":"${convertArrayToObject(authors,'id')[post.author].name}", 
+                            
                             "jobTitle": "Journalist",
-                            "url":"${convertArrayToObject(authors,'id')[post.author].link}"
+                           
                         },
                         "publisher":{
                             "@type":"Organization",
@@ -138,15 +132,15 @@ const PostPage = () => {
         }
 
       
-      {!post || !categories || !authors  ? null :  
+      {!post || !allCategories || !authors  ? null :  
       <React.Fragment>
         <SharePostBar props = {windowState}/>
         <Container data-id="post-container" >
           <Title >{he.decode(post.title.rendered)}</Title>
 
           <DateWrapper>
-            <strong>{dayjs(post.date).format("DD MMMM YYYY")} - {convertArrayToObject(categories,'id')[post.categories[0]].name}</strong>
-            <strong>Autor:  {convertArrayToObject(authors,'id')[post.author].name}</strong><br/>
+            <strong>{dayjs(post.date).format("DD MMMM YYYY")}  </strong>
+            <strong>Autor: {authors[post.author].name}</strong><br/>
           </DateWrapper>
 
 

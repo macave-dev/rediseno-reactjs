@@ -20,7 +20,6 @@ const App = () => {
   return (
     <>
       <Header/>
-      
       <Main>
         <Routes>
           <Route path ='/' element = {<Home/>}/>
