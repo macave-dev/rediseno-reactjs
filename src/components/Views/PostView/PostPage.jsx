@@ -127,7 +127,7 @@ const PostPage = () => {
               </Helmet>
         }
       
-      {!post ? null : <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  }
+      {!post ? null : <meta property="og:image" content={post.jetpack_featured_media_url}/>}
 
       {!post || !schema ? null : (
         <Helmet>
