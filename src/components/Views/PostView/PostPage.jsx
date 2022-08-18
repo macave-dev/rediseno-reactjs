@@ -88,7 +88,6 @@ const PostPage = () => {
   return (
     <div>  
         {!post || !authors || !schema ? null:
-            <React.Fragment>
               <Helmet>
                  <script type="application/ld+json">{
                     `{
@@ -126,8 +125,9 @@ const PostPage = () => {
                     }
                 </script>
               </Helmet>
-            </React.Fragment>
         }
+      
+      {!post ? null : <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  }
 
       {!post || !schema ? null : (
         <Helmet>
@@ -145,7 +145,7 @@ const PostPage = () => {
           <meta data-rh="true" property="og:title" content={post.title.rendered}/>
           <meta data-rh="true" property="og:site_name" content={schema.Name}/>
           <meta data-rh="true" property="og:url" content={`https://eventosyfestivales.com${window.location.pathname}`}/>
-          <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  
+          
           <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
           <link rel="canonical" href={`https://eventosyfestivales.com${window.location.pathname}`}/>
           <title>{he.decode(post.title.rendered)}</title>
