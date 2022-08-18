@@ -27,7 +27,7 @@ const applyTaboola = () => {
 
 const PostPage = () => {
 
-  const current_url = `https://eventosyfestivales.com${window.location.pathname}`
+  const current_url = `https://eventosyfestivales.com`
   const apiPost = `https://eventosyfestivales.com/wp-json/wp/v2/posts?slug=${(window.location.pathname).slice(1)}`
 
   const [post,setPost] = useState(null)
@@ -103,8 +103,10 @@ const PostPage = () => {
                 <meta data-r ="true" property="og:type" content="article"/>
                 <meta data-rh="true" property="og:title" content={post.title.rendered}/>
                 <meta data-rh="true" property="og:site_name" content={schema.Name}/>
+                <meta data-rh="true" property="og:url" content={`https://eventosyfestivales.com${window.location.pathname}`}/>
                 <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  
                 <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
+                <link rel="canonical" href={`https://eventosyfestivales.com${window.location.pathname}`}/>
                 <title>{he.decode(post.title.rendered)}</title>
               <Helmet>
                  <script type="application/ld+json">{
@@ -133,10 +135,10 @@ const PostPage = () => {
                         "publisher":{
                             "@type":"Organization",
                             "name":"${schema.Name}",
-                            "url": "${current_url}",
+                            "url": "https://eventosyfestivales.com",
                             "logo":{
                               "@type":"ImageObject",
-                              "url":"${schema.Logo}" 
+                              "url":"https://i0.wp.com/eventosyfestivales.com/wp-content/uploads/2022/04/cropped-eyf-png-1.png?fit=512%2C512&ssl=1" 
                             }
                         }
                     }`
@@ -162,6 +164,8 @@ const PostPage = () => {
           <Content>
               <LeftSide>
                 <img src = {post.jetpack_featured_media_url} alt = ''></img>
+
+                
                 <ContentInfo>
                   <div dangerouslySetInnerHTML={{__html: post.content.rendered}}/>
                 </ContentInfo>
@@ -211,6 +215,7 @@ const PostPage = () => {
 }
 
 export default PostPage
+
 
 const Container = styled.div`
   max-width: 870px;

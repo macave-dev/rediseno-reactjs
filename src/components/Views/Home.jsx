@@ -18,13 +18,15 @@ const Section10 = lazy(() => import('../HomeSections/Section10'))
 const Home = () => {
 
   const [schema,setSchema] = useState(null)
-  const current_url = `https://eventosyfestivales.com${window.location.pathname}`
+  const current_url = `https://eventosyfestivales.com`
 
-  Axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
-    (response) => {
-      setSchema(response.data)
-    }
-  )
+  useEffect(() => {
+    Axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
+      (response) => {
+        setSchema(response.data)
+      })
+  },[])
+ 
 
 
   return (
