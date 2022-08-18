@@ -11,7 +11,6 @@ import AuthorSection from '../../AuthorSection'
 import RelatedTopics from '../../RelatedTopics'
 
 
-
 const PostPage = () => {
 
   const current_url = `https://eventosyfestivales.com${window.location.pathname}`
@@ -64,19 +63,6 @@ const PostPage = () => {
     }
   })
 
-  // const taboola = <React.Fragment>
-  //   <div id="taboola-below-article-thumbnails"></div>
-  //   <script type="text/javascript">
-  //     window._taboola = window._taboola || [];
-  //     _taboola.push({
-  //     mode: 'alternating-thumbnails-a',
-  //     container: 'taboola-below-article-thumbnails',
-  //     placement: 'Below Article Thumbnails',
-  //     target_type: 'mix'
-  //     });
-  //   </script>
-  // </React.Fragment>
-  
   
   return (
     <div>  
@@ -103,13 +89,15 @@ const PostPage = () => {
          
         {!post || !authors || !schema ? '':
         
-            <>
+            <React.Fragment>
               <Helmet>
                  <script type="application/ld+json">{
                     `{
-                      tags = {post.tags}/"mainEntityOfPage":{
-                            "@type":"WebPage",
-                            "@id":"${post.link}" 
+                        "@context":"https://schema.org",
+                        "@type":"NewsArticle",
+                        "mainEntityOfPage":{
+                          "@type":"WebPage",
+                          "@id":"${post.link}" 
                         },
                         "headline":"${he.decode(post.title.rendered)}",
                         "image":{
@@ -122,9 +110,9 @@ const PostPage = () => {
                         "dateModified":"${post.date_gmt}", 
                         "author":{
                             "@type":"Person",
-                            
+                            "name":"${authors[post['author']].name}", 
                             "jobTitle": "Journalist",
-                           
+                            "url":"${authors[post['author']].link}"
                         },
                         "publisher":{
                             "@type":"Organization",
@@ -139,8 +127,7 @@ const PostPage = () => {
                     }
                 </script>
               </Helmet>
-            </>
-           
+            </React.Fragment>
         }
 
       
@@ -184,7 +171,15 @@ const PostPage = () => {
             <Content>
               <LeftSide>
                 <RelatedTopics tags = {post.tags}/> 
-                
+                {
+                  <div>
+                    <div id="taboola-below-article-thumbnails"></div>
+                    <script type="text/javascript">
+                    
+                    </script>
+                  </div>
+                  
+                }
                 <AuthorSection props = {post.author}/>
               </LeftSide>
               <RightSide>
