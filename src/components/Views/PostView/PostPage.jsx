@@ -144,7 +144,7 @@ const PostPage = () => {
                 <title>{he.decode(post.title.rendered)}</title>
 
 
-                <meta data-rh="true" property="og:image" content="https://softwaretestinglead.com/wp-content/uploads/2022/04/Frameworks-for-React-JS.jpg"/>  
+                <meta property="og:image" content="https://softwaretestinglead.com/wp-content/uploads/2022/04/Frameworks-for-React-JS.jpg"/>  
               </Helmet>
         }
       
