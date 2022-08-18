@@ -51,25 +51,21 @@ const Home = () => {
                 }`
               }
             </script>
+
+            <meta name="description" content={schema.Description}/>
+            <meta property="fb:pages" content={schema.FacebookPages}/>
+            <meta property="fb:app_id" content={schema.FacebookId}/>
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content={schema.Name}/>
+            <meta property="og:site_name" content={schema.Name}/>
+            <meta property="og:url" content={current_url}/>
+            <meta property="og:image" content={schema.SiteImage}/>
+            <meta property="og:description" content={schema.Description}/>
+            <title data-rh="true">{schema.Name} | {schema.Description}</title>
           </Helmet>
         </>
       }
-            
-        {/* MAIN META TAGS */}
-        {!schema ? null : 
-            <Helmet>
-              <meta data-rh="true" name="description" content={schema.Description}/>
-              <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
-              <meta data-rh="true" property="fb:app_id" content={schema.FacebookId}/>
-              <meta data-rh="true" property="og:type" content="article"/>
-              <meta data-rh="true" property="og:title" content={"holaaaa"}/>
-              <meta data-rh="true" property="og:site_name" content={schema.Name}/>
-              <meta data-rh="true" property="og:url" content={"holaaaaaaa"}/>
-              <meta data-rh="true" property="og:image" content={schema.SiteImage}/>
-              <meta data-rh="true" property="og:description" content={schema.Description}/>
-              <title data-rh="true">{schema.Name} | {schema.Description}</title>
-            </Helmet>
-        }
+
      
       <Suspense fallback={ null}>
         <Section1/>
