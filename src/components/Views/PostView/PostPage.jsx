@@ -142,12 +142,13 @@ const PostPage = () => {
                 <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
                 <link rel="canonical" href={`https://eventosyfestivales.com${window.location.pathname}`}/>
                 <title>{he.decode(post.title.rendered)}</title>
-
-
-                <meta property="og:image" content="https://softwaretestinglead.com/wp-content/uploads/2022/04/Frameworks-for-React-JS.jpg"/>  
               </Helmet>
         }
+
       
+      <Helmet>
+        <meta data-rh="true" property="og:image" content="https://softwaretestinglead.com/wp-content/uploads/2022/04/Frameworks-for-React-JS.jpg"/>  
+      </Helmet>
 
 
       
