@@ -62,9 +62,9 @@ const Home = () => {
               <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
               <meta data-rh="true" property="fb:app_id" content={schema.FacebookId}/>
               <meta data-rh="true" property="og:type" content="article"/>
-              <meta data-rh="true" property="og:title" content={schema.Name}/>
+              <meta data-rh="true" property="og:title" content={"holaaaa"}/>
               <meta data-rh="true" property="og:site_name" content={schema.Name}/>
-              <meta data-rh="true" property="og:url" content={current_url}/>
+              <meta data-rh="true" property="og:url" content={"holaaaaaaa"}/>
               <meta data-rh="true" property="og:image" content={schema.SiteImage}/>
               <meta data-rh="true" property="og:description" content={schema.Description}/>
               <title data-rh="true">{schema.Name} | {schema.Description}</title>
