@@ -81,9 +81,10 @@ const PostPage = () => {
     if ( ref.current ) {
       setWindowState( true )
     }
-    applyTaboola();
+
   })
 
+  applyTaboola();
   
   return (
     <div>  
