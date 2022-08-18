@@ -84,7 +84,6 @@ const PostPage = () => {
 
   })
 
-  applyTaboola();
   
   return (
     <div>  
