@@ -55,7 +55,7 @@ const Home = () => {
             
         {/* MAIN META TAGS */}
         {!schema ? null : 
-          <>
+          <React.Fragment>
             <Helmet>
               <meta data-rh="true" name="description" content={schema.Description}/>
               <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
@@ -68,7 +68,7 @@ const Home = () => {
               <meta data-rh="true" property="og:description" content={schema.Description}/>
               <title data-rh="true">{schema.Name} | {schema.Description}</title>
             </Helmet>
-          </>
+          </React.Fragment>
         }
      
       <Suspense fallback={ null}>
