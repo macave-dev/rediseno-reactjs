@@ -10,6 +10,20 @@ import RelatedPosts from '../../RelatedPosts'
 import AuthorSection from '../../AuthorSection'
 import RelatedTopics from '../../RelatedTopics'
 
+const applyTaboola = () => {
+  if (document.getElementById("taboola-below-article-thumbnails").innerHTML.length) return;
+      let _taboola;
+      window._taboola = window._taboola || [];
+      _taboola.push({
+      mode: 'alternating-thumbnails-a',
+      container: 'taboola-below-article-thumbnails',
+      placement: 'Below Article Thumbnails',
+      target_type: 'mix'
+    });
+
+    window._taboola.push({ flush: true });
+}
+
 
 const PostPage = () => {
 
@@ -67,6 +81,7 @@ const PostPage = () => {
     if ( ref.current ) {
       setWindowState( true )
     }
+    applyTaboola();
   })
 
   
@@ -93,7 +108,7 @@ const PostPage = () => {
           </Helmet>
         }
          
-        {!post || !authors || !schema ? '':
+        {!post || !authors || !schema ? null:
         
             <React.Fragment>
               <Helmet>
@@ -157,7 +172,9 @@ const PostPage = () => {
                 </ContentInfo>
                 
                 <InterestedPosts/>
-                {}
+                  <div className="taboola-section">
+                    <div id="taboola-below-article-thumbnails"></div>
+                  </div>
               </LeftSide>
 
               <RightSide>
