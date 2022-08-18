@@ -87,30 +87,25 @@ const PostPage = () => {
   
   return (
     <div>  
-        {!post || !schema ?  null :
-          <Helmet>
-            <link data-rh="true" rel="preload" as="image" imagesrcset={post.jetpack_featured_media_url}/>
-            <meta data-rh="true" name="description" content={post.yoast_head_json.og_description}/>
-            <meta data-rh="true" name="twitter:card" content="summary_large_image"/>
-            <meta data-rh="true" name="twitter:site" content={schema.Name}/>
-            <meta data-rh="true" name="twitter:title" content={post.title.rendered}/>
-            <meta data-rh="true" name="twitter:description" content={post.yoast_head_json.og_description}/>
-            <meta data-rh="true" name="twitter:image" content={post.jetpack_featured_media_url}/>
-            <meta data-rh="true" name="robots" content="max-image-preview:large"/>
-            <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
-            <meta data-rh="true" property="fb:app_id" content={schema.FacebookId}/>
-            <meta data-r ="true" property="og:type" content="article"/>
-            <meta data-rh="true" property="og:title" content={post.title.rendered}/>
-            <meta data-rh="true" property="og:site_name" content={schema.Name}/>
-            <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  
-            <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
-            <title>{he.decode(post.title.rendered)}</title>
-          </Helmet>
-        }
-         
         {!post || !authors || !schema ? null:
         
             <React.Fragment>
+                <link data-rh="true" rel="preload" as="image" imagesrcset={post.jetpack_featured_media_url}/>
+                <meta data-rh="true" name="description" content={post.yoast_head_json.og_description}/>
+                <meta data-rh="true" name="twitter:card" content="summary_large_image"/>
+                <meta data-rh="true" name="twitter:site" content={schema.Name}/>
+                <meta data-rh="true" name="twitter:title" content={post.title.rendered}/>
+                <meta data-rh="true" name="twitter:description" content={post.yoast_head_json.og_description}/>
+                <meta data-rh="true" name="twitter:image" content={post.jetpack_featured_media_url}/>
+                <meta data-rh="true" name="robots" content="max-image-preview:large"/>
+                <meta data-rh="true" property="fb:pages" content={schema.FacebookPages}/>
+                <meta data-rh="true" property="fb:app_id" content={schema.FacebookId}/>
+                <meta data-r ="true" property="og:type" content="article"/>
+                <meta data-rh="true" property="og:title" content={post.title.rendered}/>
+                <meta data-rh="true" property="og:site_name" content={schema.Name}/>
+                <meta data-rh="true" property="og:image" content={post.jetpack_featured_media_url}/>  
+                <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
+                <title>{he.decode(post.title.rendered)}</title>
               <Helmet>
                  <script type="application/ld+json">{
                     `{

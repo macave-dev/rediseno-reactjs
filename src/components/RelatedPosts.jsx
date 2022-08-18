@@ -93,6 +93,7 @@ const RelatedPosts = (categoryID) => {
                     const formattedDate = dayjs(post.date).format("DD MMMM YYYY");
                     return(
                         <div key = {id}>
+                            <a href={post.link}>
                             <CardContent className='card-content'>
                                 <div className='card__background--wrap'>
                                     <div className='card__background' style={{backgroundImage: `url(${post.jetpack_featured_media_url})`}}></div>
@@ -112,6 +113,8 @@ const RelatedPosts = (categoryID) => {
                                     </ul>
                                 </CardContentInfo>
                             </CardContent>
+
+                            </a>
                         </div>
                         
                     )
@@ -164,6 +167,11 @@ const RelatedNotesSliderContent = styled.div`
         -ms-touch-action: pan-y;
         touch-action: pan-y;
         -webkit-tap-highlight-color: transparent;
+
+        a{
+            text-decoration: none;
+            color: #000000;
+        }
     }
     .slick-list {
         position: relative;
