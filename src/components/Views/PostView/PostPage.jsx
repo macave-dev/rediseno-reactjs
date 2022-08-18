@@ -194,15 +194,9 @@ const PostPage = () => {
             <Content>
               <LeftSide>
                 <RelatedTopics tags = {post.tags}/> 
-                {
-                  <div>
-                    <div id="taboola-below-article-thumbnails"></div>
-                    <script type="text/javascript">
-                    
-                    </script>
-                  </div>
-                  
-                }
+                <div className="taboola-section">
+                  <div id="taboola-below-article-thumbnails"></div>
+                </div>
                 <AuthorSection props = {post.author}/>
               </LeftSide>
               <RightSide>
