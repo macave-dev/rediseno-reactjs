@@ -20,7 +20,7 @@ const applyTaboola = () => {
       placement: 'Below Article Thumbnails',
       target_type: 'mix'
     });
-
+    
     window._taboola.push({ flush: true });
 }
 
