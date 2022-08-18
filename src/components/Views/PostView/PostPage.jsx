@@ -52,9 +52,15 @@ const PostPage = () => {
         setAuthors(convertArrayToObject(res.data,'id'))
     })
 
+    axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
+      res => {
+        setSchema(res.data)
+    })
+
+    
+
     setWindowState( false );
   },[apiPost])
-
 
   
   useEffect(() => {
