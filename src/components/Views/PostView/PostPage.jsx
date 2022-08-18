@@ -130,7 +130,7 @@ const PostPage = () => {
         }
 
       {!post || !schema ? null : (
-        <>
+        <Helmet>
           <link data-rh="true" rel="preload" as="image" imagesrcset={post.jetpack_featured_media_url}/>
           <meta data-rh="true" name="description" content={post.yoast_head_json.og_description}/>
           <meta data-rh="true" name="twitter:card" content="summary_large_image"/>
@@ -149,7 +149,7 @@ const PostPage = () => {
           <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
           <link rel="canonical" href={`https://eventosyfestivales.com${window.location.pathname}`}/>
           <title>{he.decode(post.title.rendered)}</title>
-        </>
+        </Helmet>
       )}
       
 
