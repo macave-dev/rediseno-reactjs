@@ -32,9 +32,8 @@ const Home = () => {
   return (
     <div>
 
-      {!schema ? null : 
+      {/* {!schema ? null : 
         <>
-          {/* DEFINE SCHEMA */}
           <Helmet>
             <script type="application/ld+json">
               {
@@ -53,10 +52,10 @@ const Home = () => {
             </script>
           </Helmet>
         </>
-      }
+      } */}
 
-       {/* MAIN META TAGS */}
-       {!schema ? null : 
+       
+       {/* {!schema ? null : 
           <>
             <Helmet>
               <meta data-rh="true" name="description" content={schema.Description}/>
@@ -71,7 +70,7 @@ const Home = () => {
               <title data-rh="true">{schema.Name} | {schema.Description}</title>
             </Helmet>
           </>
-        }
+        } */}
 
      
       <Suspense fallback={ null}>

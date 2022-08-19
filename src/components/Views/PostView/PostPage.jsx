@@ -87,7 +87,7 @@ const PostPage = () => {
   
   return (
     <div>  
-         {!post || !schema ?  null :
+         {/* {!post || !schema ?  null :
           <Helmet>
             <link data-rh="true" rel="preload" as="image" imagesrcset={post.jetpack_featured_media_url}/>
             <meta data-rh="true" name="description" content={post.yoast_head_json.og_description}/>
@@ -106,7 +106,7 @@ const PostPage = () => {
             <meta data-rh="true" property="og:description" content={post.yoast_head_json.og_description}/>
             <title>{he.decode(post.title.rendered)}</title>
           </Helmet>
-        }
+        } */}
 
         {!post || !authors || !schema ? null:
           <>
