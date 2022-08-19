@@ -18,7 +18,7 @@ const Section10 = lazy(() => import('../HomeSections/Section10'))
 const Home = () => {
 
   const [schema,setSchema] = useState(null)
-  const current_url = `https://eventosyfestivales.com`
+  const current_url = `https://eventosyfestivales.coooooooom`
 
   useEffect(() => {
     Axios.get(`https://eventosyfestivales.com/wp-json/wp-macave/v1/schema`).then(
