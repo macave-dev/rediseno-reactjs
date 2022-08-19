@@ -32,7 +32,7 @@ const Home = () => {
   return (
     <div>
 
-      {/* {!schema ? null : 
+      {!schema ? null : 
         <>
           <Helmet>
             <script type="application/ld+json">
@@ -52,7 +52,7 @@ const Home = () => {
             </script>
           </Helmet>
         </>
-      } */}
+      }
 
        
        {/* {!schema ? null : 
