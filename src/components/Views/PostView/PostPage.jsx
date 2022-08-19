@@ -146,12 +146,6 @@ const PostPage = () => {
         }
 
       
-      <Helmet>
-        <meta data-rh="true" property="og:image" content="https://softwaretestinglead.com/wp-content/uploads/2022/04/Frameworks-for-React-JS.jpg"/>  
-      </Helmet>
-
-
-      
       {!post || !allCategories || !authors  ? null :  
       <React.Fragment>
         <SharePostBar props = {windowState}/>
