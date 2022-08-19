@@ -55,7 +55,7 @@ const Home = () => {
       }
 
        
-       {/* {!schema ? null : 
+       {!schema ? null : 
           <>
             <Helmet>
               <meta data-rh="true" name="description" content={schema.Description}/>
@@ -70,7 +70,7 @@ const Home = () => {
               <title data-rh="true">{schema.Name} | {schema.Description}</title>
             </Helmet>
           </>
-        } */}
+        }
 
      
       <Suspense fallback={ null}>
