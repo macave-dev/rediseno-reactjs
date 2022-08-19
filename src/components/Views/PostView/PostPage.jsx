@@ -108,7 +108,7 @@ const PostPage = () => {
           </Helmet>
         }
 
-        {/* {!post || !authors || !schema ? null:
+        {!post || !authors || !schema ? null:
           <>
             <Helmet>
                  <script type="application/ld+json">{
@@ -148,7 +148,7 @@ const PostPage = () => {
                 </script>
               </Helmet>
           </>
-        } */}
+        }
 
 
       {!post || !allCategories || !authors  ? null :  
